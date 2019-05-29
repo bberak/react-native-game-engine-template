@@ -1,5 +1,5 @@
 import React from "react";
-import { PixelRatio } from 'react-native';
+import { PixelRatio, StyleSheet } from 'react-native';
 import { GameEngine } from "react-native-game-engine";
 import { Engine as Renderer, Scene, Color3 } from "babylonjs";
 import { GLView } from "expo";
@@ -18,10 +18,8 @@ class Game extends React.Component {
     this.renderer = new Renderer(gl, true);
     this.scene = new Scene(this.renderer);
     this.scene.createDefaultLight();
-    this.scene.clearColor = Color3.Black();
+    this.scene.clearColor = Color3.Blue();
     this.refs.engine.swap(Entities(this.scene));
-
-    console.log(`${width}, ${height}, ${scale}, ${this.renderer.getRenderHeight()}`);
   }
 
   componentWillUnmount() {
@@ -41,7 +39,7 @@ class Game extends React.Component {
           }
         }}
       >
-        <GLView onContextCreate={this.onContextCreate} />
+        <GLView onContextCreate={this.onContextCreate} style={StyleSheet.absoluteFill} />
       </GameEngine>
     );
   }
