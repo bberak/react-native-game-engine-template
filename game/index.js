@@ -1,8 +1,9 @@
 import React from "react";
-import { PixelRatio, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { GameEngine } from "react-native-game-engine";
 import { Engine as Renderer, Scene, Color3 } from "babylonjs";
 import { GLView } from "expo";
+import Systems from "./systems";
 import Entities from "./entities";
 
 global.HTMLElement = () => false; 
@@ -26,6 +27,7 @@ class Game extends React.Component {
     return (
       <GameEngine
         ref={"engine"}
+        systems={Systems}
         renderer={() => {
           if (this.renderer && this.scene && this.gl) {
             this.renderer.beginFrame();

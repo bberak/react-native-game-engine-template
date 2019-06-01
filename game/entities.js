@@ -11,7 +11,13 @@ export default async scene => {
 	const entities = {
 		scene,
 		camera,
-		box
+		box: {
+			model: box,
+			rotation: {
+				yaw: 0.01,
+				roll: 0.01
+			}
+		}
 	};
 
 	return entities;
