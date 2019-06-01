@@ -10,10 +10,6 @@ global.HTMLElement = () => false;
 class Game extends React.Component {
 
   onContextCreate = gl => {
-    const scale = PixelRatio.get();
-    const width = gl.drawingBufferWidth / scale;
-    const height = gl.drawingBufferHeight / scale;
-
     this.gl = gl;
     this.renderer = new Renderer(gl, true);
     this.scene = new Scene(this.renderer);
