@@ -7,6 +7,15 @@ import Systems from "./systems";
 import Entities from "./entities";
 
 global.HTMLElement = () => false; 
+global.HTMLImageElement = () => false; 
+global.Image = () => ({ 
+  addEventListener() {
+    console.log("YOOOOO")
+  },
+  removeEventListener() {
+    console.log("hhahahah")
+  }
+ }); 
 
 class Game extends React.Component {
 

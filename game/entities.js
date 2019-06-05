@@ -1,4 +1,5 @@
 import { Vector3, FreeCamera, MeshBuilder } from "babylonjs";
+import { Sprite } from "./components"
 
 export default async scene => {
 
@@ -11,6 +12,7 @@ export default async scene => {
 	const entities = {
 		scene,
 		camera,
+		sprite: await Sprite({ scene }),
 		box: {
 			model: box,
 			rotation: {
