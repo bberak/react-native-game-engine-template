@@ -2,20 +2,32 @@ import React from "react";
 import { StyleSheet } from 'react-native';
 import { GameEngine } from "react-native-game-engine";
 import { Engine as Renderer, Scene, Color3 } from "babylonjs";
-import { GLView } from "expo";
+import { GLView } from "expo-gl";
 import Systems from "./systems";
 import Entities from "./entities";
+import { getInfoAsync, readAsStringAsync } from 'expo-file-system'
+import AssetUtils from 'expo-asset-utils';
 
 global.HTMLElement = () => false; 
 global.HTMLImageElement = () => false; 
 global.Image = () => ({ 
-  addEventListener() {
-    console.log("YOOOOO")
-  },
-  removeEventListener() {
-    console.log("hhahahah")
-  }
+  addEventListener(...args) { console.log("Image.addEventListener", args) },
+  removeEventListener(...args) { console.log("Image.removeEventListener", args) }
  }); 
+
+console.log(Renderer._TextureLoaders.push({
+  canLoad(...args) {
+    console.log("canLoad: ", args)
+    return true;
+  },
+  transformUrl(url) { console.log("transformUrl: ", Object.keys(url));  return url; },
+  loadData(data, texture) {
+    console.log("loadData: ", data, texture.url)
+    //getInfoAsync(texture.url).then(console.log)
+    //readAsStringAsync(texture.url, { encoding: "Base64" }).then(console.log)
+    AssetUtils.resolveAsync(texture.url).then(obj => readAsStringAsync(obj.uri, { encoding: "Base64" })).then(console.log)
+  }
+}));
 
 class Game extends React.Component {
 

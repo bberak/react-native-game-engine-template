@@ -3,7 +3,7 @@
     "name": "React Native Game Engine Template",
     "slug": "react-native-game-engine-template",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "33.0.0",
     "platforms": [
       "ios",
       "android"

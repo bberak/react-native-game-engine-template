@@ -3,7 +3,7 @@ import { Sprite } from "./components"
 
 export default async scene => {
 
-	const camera = new FreeCamera("Camera", new Vector3(5, 5, 5), scene);
+	const camera = new FreeCamera("Camera", new Vector3(10, 10, 10), scene);
 	
 	camera.setTarget(Vector3.Zero());
 

@@ -1,6 +1,5 @@
 import _ from "lodash";
 import * as popcorn from '@popmotion/popcorn';
-import FileLoader from "./file-loader";
 
 const any = (arr = [], b = "", c) => {
 	if (c) {
@@ -124,13 +123,17 @@ const throttle = (func, interval, defaultValue) => {
 	}
 }
 
-const loadBuffer = (uri, onProgress) => {
-	const loader = new FileLoader();
-  	loader.setResponseType("arraybuffer");
+const httpGet = url => {
+    return new Promise((accept, reject) => {
+        const req = new XMLHttpRequest();
 
-  	return new Promise((res, rej) => loader.load(uri, res, onProgress, rej));
+        req.open("GET", url, true);
+        req.responseType = "arraybuffer";
+        req.onerror = reject;
+        req.onload = (ev) => accept(ev);
 
-  	//return fetch(uri).then(res => res.arrayBuffer())
+        req.send();
+    });
 }
 
 export {
@@ -156,5 +159,5 @@ export {
 	once,
 	memoize,
 	throttle,
-	loadBuffer
+	httpGet
 }
