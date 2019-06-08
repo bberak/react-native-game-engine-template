@@ -1,5 +1,6 @@
 import _ from "lodash";
 import * as popcorn from '@popmotion/popcorn';
+import FileLoader from "./file-loader";
 
 const any = (arr = [], b = "", c) => {
 	if (c) {
@@ -123,6 +124,15 @@ const throttle = (func, interval, defaultValue) => {
 	}
 }
 
+const loadBuffer = (uri, onProgress) => {
+	const loader = new FileLoader();
+  	loader.setResponseType("arraybuffer");
+
+  	return new Promise((res, rej) => loader.load(uri, res, onProgress, rej));
+
+  	//return fetch(uri).then(res => res.arrayBuffer())
+}
+
 export {
 	any,
 	find,
@@ -145,5 +155,6 @@ export {
 	randomInt,
 	once,
 	memoize,
-	throttle
+	throttle,
+	loadBuffer
 }
