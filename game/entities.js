@@ -7,12 +7,17 @@ export default async scene => {
 	
 	camera.setTarget(Vector3.Zero());
 
-	//const box = MeshBuilder.CreateBox("", {}, scene);
-
 	const entities = {
 		scene,
 		camera,
-		sprite: await Sprite({ scene })
+		sprite: await Sprite({ scene }),
+		box: {
+			model: MeshBuilder.CreateBox("", {}, scene),
+			rotation: {
+				yaw: 0.01,
+				roll: 0.01
+			}
+		}
 	};
 
 	return entities;
