@@ -20,12 +20,12 @@ console.log(Renderer._TextureLoaders.push({
     console.log("canLoad: ", args)
     return true;
   },
-  transformUrl(url) { console.log("transformUrl: ", Object.keys(url));  return url; },
+  transformUrl(url) { console.log("transformUrl: ", url);  return url; },
   loadData(data, texture) {
     console.log("loadData: ", data, texture.url)
     //getInfoAsync(texture.url).then(console.log)
     //readAsStringAsync(texture.url, { encoding: "Base64" }).then(console.log)
-    AssetUtils.resolveAsync(texture.url).then(obj => readAsStringAsync(obj.uri, { encoding: "Base64" })).then(console.log)
+    //AssetUtils.resolveAsync(texture.url).then(obj => readAsStringAsync(obj.uri, { encoding: "Base64" })).then(console.log)
   }
 }));
 

@@ -3,6 +3,7 @@ import { httpGet } from "../utils";
 import { getSpriteManager } from "../utils/babylon";
 import Sheet from "../../assets/spritesheets/cuphead.png";
 import { Asset  } from "expo-asset";
+import ExpoTHREE from "expo-three"
 
 export default async ({ scene, x = 0, z = 0, y = 0 }) => {
 
@@ -20,6 +21,10 @@ export default async ({ scene, x = 0, z = 0, y = 0 }) => {
 	//const asset = Asset.fromModule(Sheet);
 	//const test = await httpGet(asset.localUri);
 	//const data = "data:image/jpg;base64," + test.target._response;
+
+	const res = await ExpoTHREE.loadAsync(Sheet)
+	console.log("res", res);
+	console.log("res.image", res.image);
 
 	const asset = Asset.fromModule(Sheet);
 	const manager = getSpriteManager("player", asset.uri, 1, { width: 103.0625, height: 113.125 }, scene);
