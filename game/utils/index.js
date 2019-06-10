@@ -123,19 +123,6 @@ const throttle = (func, interval, defaultValue) => {
 	}
 }
 
-const httpGet = url => {
-    return new Promise((accept, reject) => {
-        const req = new XMLHttpRequest();
-
-        req.open("GET", url, true);
-        req.responseType = "arraybuffer";
-        req.onerror = reject;
-        req.onload = (ev) => accept(ev);
-
-        req.send();
-    });
-}
-
 export {
 	any,
 	find,
@@ -158,6 +145,5 @@ export {
 	randomInt,
 	once,
 	memoize,
-	throttle,
-	httpGet
+	throttle
 }

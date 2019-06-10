@@ -1,26 +1,10 @@
 import { Vector3, Sprite } from "babylonjs";
-import { httpGet } from "../utils";
 import { getSpriteManager } from "../utils/babylon";
 import Sheet from "../../assets/spritesheets/cuphead.png";
 import { Asset  } from "expo-asset";
 import ExpoTHREE from "expo-three"
 
 export default async ({ scene, x = 0, z = 0, y = 0 }) => {
-
-	//const test = await 
-
-	//const test = Asset.fromModule(Sheet);
-	//const test2 = Asset.fromModule(Sheet);
-	//console.log(test, test2);
-	//const sdf = await AssetUtils.uriAsync(Sheet);
-	//console.log(sdf)
-	//const buffer = await httpGet(test2.localUri);
-	//console.log(buffer)
-
-	//await Asset.fromModule(Sheet).downloadAsync();
-	//const asset = Asset.fromModule(Sheet);
-	//const test = await httpGet(asset.localUri);
-	//const data = "data:image/jpg;base64," + test.target._response;
 
 	const res = await ExpoTHREE.loadAsync(Sheet)
 	console.log("res", res);

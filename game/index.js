@@ -17,12 +17,10 @@ global.Image = () => ({
 
 Renderer._TextureLoaders.push({
   canLoad(...args) {
-    console.log("canLoad: ", args)
     return true;
   },
   transformUrl(url) { console.log("transformUrl: ", url);  return url; },
   loadData(data, texture, cb) {
-    console.log("loadData: ", data, texture.url)
     //-- https://github.com/BabylonJS/Babylon.js/blob/f3b4098c0f3f00f7f3993494bf833af266160b1b/src/Materials/Textures/Loaders/tgaTextureLoader.ts
     //-- https://github.com/BabylonJS/Babylon.js/blob/f3b4098c0f3f00f7f3993494bf833af266160b1b/src/Misc/tga.ts
     //-- https://github.com/BabylonJS/Babylon.js/search?q=_prepareWebGLTexture&unscoped_q=_prepareWebGLTexture
@@ -35,8 +33,6 @@ Renderer._TextureLoaders.push({
       })
     //readAsStringAsync(texture.url, { encoding: "Base64" }).then(console.log)
     //AssetUtils.resolveAsync(texture.url).then(obj => readAsStringAsync(obj.uri, { encoding: "Base64" })).then(console.log)
-
-    cb()
   }
 });
 
