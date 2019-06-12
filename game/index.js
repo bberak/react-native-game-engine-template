@@ -24,6 +24,7 @@ Renderer._TextureLoaders.push({
     //-- https://github.com/BabylonJS/Babylon.js/blob/f3b4098c0f3f00f7f3993494bf833af266160b1b/src/Materials/Textures/Loaders/tgaTextureLoader.ts
     //-- https://github.com/BabylonJS/Babylon.js/blob/f3b4098c0f3f00f7f3993494bf833af266160b1b/src/Misc/tga.ts
     //-- https://github.com/BabylonJS/Babylon.js/search?q=_prepareWebGLTexture&unscoped_q=_prepareWebGLTexture
+    //-- https://github.com/gre/webgltexture-loader/blob/master/packages/webgltexture-loader-expo/src/ExpoModuleTextureLoader.js
     resolveAsync(texture.url)
       .then(asset => {
         console.log("asset", asset)
