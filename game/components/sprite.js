@@ -17,10 +17,10 @@ export default async ({ scene, x = 0, z = 0, y = 0 }) => {
 	sprite.position.x = x;
 	sprite.position.y = y;
 	sprite.position.z = z;
-	sprite.size = 1.5
+	sprite.size = 2.5
 	sprite.cellIndex = 48;
 	sprite.playAnimation(50, 61, true, 100);
-	sprite.invertU = -1;
+	sprite.invertU = 1;
 	
 	return {
 		model: sprite,

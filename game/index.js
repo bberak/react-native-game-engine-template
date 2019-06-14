@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from 'react-native';
 import { GameEngine } from "react-native-game-engine";
-import { Engine as Renderer, Scene, Color3 } from "babylonjs";
+import { Engine as Renderer, Scene, Color3, Tools } from "babylonjs";
 import { GLView } from "expo-gl";
 import Systems from "./systems";
 import Entities from "./entities";
@@ -14,6 +14,121 @@ global.Image = () => ({
   addEventListener(...args) { console.log("Image.addEventListener - I should not get here..", args) },
   removeEventListener(...args) { console.log("Image.removeEventListener - I should not get here..", args) }
  }); 
+
+
+
+
+
+
+
+function _prepareWebGLTextureContinuation(texture, scene, noMipmap, isCompressed, samplingMode) {
+    console.log("_prepareWebGLTextureContinuation")
+    var gl = this._gl;
+    if (!gl) {
+        return;
+    }
+
+    var filters = this._getSamplingParameters(samplingMode, !noMipmap);
+
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filters.mag);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, filters.min);
+
+    if (!noMipmap && !isCompressed) {
+        gl.generateMipmap(gl.TEXTURE_2D);
+    }
+
+    this._bindTextureDirectly(gl.TEXTURE_2D, null);
+
+    // this.resetTextureCache();
+    if (scene) {
+        scene._removePendingData(texture);
+    }
+
+    texture.onLoadedObservable.notifyObservers(texture);
+    texture.onLoadedObservable.clear();
+}
+
+
+function _prepareWebGLTexture(texture, scene, width, height, invertY, noMipmap, isCompressed,
+        processFunction, samplingMode = Renderer.TEXTURE_TRILINEAR_SAMPLINGMODE) {
+        var maxTextureSize = this.getCaps().maxTextureSize;
+        var potWidth = Math.min(maxTextureSize, this.needPOTTextures ? Tools.GetExponentOfTwo(width, maxTextureSize) : width);
+        var potHeight = Math.min(maxTextureSize, this.needPOTTextures ? Tools.GetExponentOfTwo(height, maxTextureSize) : height);
+
+        console.log("_prepareWebGLTexture", texture.asset)
+
+        var gl = this._gl;
+        if (!gl) {
+            return;
+        }
+
+        if (!texture._webGLTexture) {
+            //  this.resetTextureCache();
+            if (scene) {
+                scene._removePendingData(texture);
+            }
+
+            return;
+        }
+
+        this._bindTextureDirectly(gl.TEXTURE_2D, texture, true);
+        this._unpackFlipY(invertY === undefined ? true : (invertY ? true : false));
+
+        
+
+        gl.texImage2D(
+        gl.TEXTURE_2D,
+        0,
+        gl.RGBA,
+        width,
+        height,
+        0,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        texture.asset
+      );
+
+        
+
+        texture.baseWidth = width;
+        texture.baseHeight = height;
+        texture.width = potWidth;
+        texture.height = potHeight;
+        texture.isReady = true;
+
+        console.log("about to call processFunction");
+
+        if (processFunction(potWidth, potHeight, () => {
+            this._prepareWebGLTextureContinuation(texture, scene, noMipmap, isCompressed, samplingMode);
+        })) {
+            // Returning as texture needs extra async steps
+            console.log("Get here homie..")
+            return;
+        }
+
+        console.log("Nah im here..")
+        this._prepareWebGLTextureContinuation(texture, scene, noMipmap, isCompressed, samplingMode);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Renderer._TextureLoaders.push({
   canLoad(...args) {
@@ -28,6 +143,7 @@ Renderer._TextureLoaders.push({
     resolveAsync(texture.url)
       .then(asset => {
         console.log("asset", asset)
+        texture.asset = asset;
         cb(asset.width, asset.height, texture.generateMipMaps, false, () => {
           console.log("DONE")
         })
@@ -42,7 +158,7 @@ class Game extends React.Component {
   onContextCreate = gl => {
     this.gl = gl;
     this.renderer = new Renderer(gl, true);
-    this.renderer._prepareWebGLTexture = () => console.log("MONKEY PATCH DELUXE!!");
+    this.renderer._prepareWebGLTexture = _prepareWebGLTexture;
     this.scene = new Scene(this.renderer);
     this.scene.createDefaultLight();
     this.scene.clearColor = Color3.Blue();
