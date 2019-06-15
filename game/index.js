@@ -9,13 +9,18 @@ import Entities from "./entities";
 
 class Game extends React.Component {
 
-  onContextCreate = gl => {
+  onContextCreate = async (gl) => { 
+    const renderer = new Renderer(gl, true);
+    const scene = new Scene(renderer);
+    const entities = await Entities(scene);
+
+    scene.createDefaultLight();
+    scene.clearColor = Color3.Blue();
+    
+    this.refs.engine.swap(entities);
     this.gl = gl;
-    this.renderer = new Renderer(gl, true);
-    this.scene = new Scene(this.renderer);
-    this.scene.createDefaultLight();
-    this.scene.clearColor = Color3.Blue();
-    this.refs.engine.swap(Entities(this.scene));
+    this.renderer = renderer;
+    this.scene = scene;
   }
 
   componentWillUnmount() {

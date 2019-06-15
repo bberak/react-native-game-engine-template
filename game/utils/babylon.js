@@ -1,19 +1,36 @@
 import { SpriteManager } from "babylonjs";
 import { Asset  } from "expo-asset";
+import { resolveAsync } from "expo-asset-utils";
 
-const getSpriteManager = (name, module, capacity, size, scene) => {
+const assetCache = {};
 
-	const asset = Asset.fromModule(module);
+const getAsset = uri => {
+	
+	if (!assetCache[uri]) {
+		console.log("CACHE MISS");
+		assetCache[uri] = resolveAsync(uri);
+	} else
+		console.log("CACHE HIT");
+
+	return assetCache[uri];
+}
+
+const getSpriteManager = async (name, module, capacity, size, scene) => {
+
+	const { uri } = Asset.fromModule(module);
+
+	const asset = await getAsset(uri);
 
 	if (!scene.spriteMangers)
 		scene.spriteMangers = {};
 
 	if (!scene.spriteMangers[name])
-		scene.spriteMangers[name] = new SpriteManager(name, asset.uri, capacity, size, scene); 
+		scene.spriteMangers[name] = new SpriteManager(name, uri, capacity, size, scene); 
 
 	return scene.spriteMangers[name];
 };
 
 export {
-	getSpriteManager
+	getSpriteManager,
+	getAsset
 }

@@ -1,5 +1,6 @@
 import { Engine } from "babylonjs";
 import { resolveAsync } from "expo-asset-utils";
+import { getAsset } from "../utils/babylon";
 
 global.HTMLElement = () => false;
 global.HTMLImageElement = () => false;
@@ -16,7 +17,7 @@ const textureLoader = {
   canLoad: () => true,
   transformUrl: url => url,
   loadData: (data, texture, cb) => {
-    resolveAsync(texture.url).then(asset => {
+    getAsset(texture.url).then(asset => {
       const gl = texture._engine._gl;
       cb(asset.width, asset.height, texture.generateMipMaps, false, () => {
         gl.texImage2D(

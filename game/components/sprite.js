@@ -4,7 +4,7 @@ import Sheet from "../../assets/spritesheets/cuphead.png";
 
 export default async ({ scene, x = 0, z = 0, y = 0 }) => {
 
-	const manager = getSpriteManager("player", Sheet, 1, { width: 103.0625, height: 113.125 }, scene);
+	const manager = await getSpriteManager("player", Sheet, 1, { width: 103.0625, height: 113.125 }, scene);
 	const sprite = new Sprite("player", manager);
 	
 	sprite.position.x = x;
