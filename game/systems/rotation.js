@@ -12,20 +12,20 @@ const Rotation = (entities, args) => {
 				? r.rotation(r, entities, args)
 				: r.model.angle + r.rotation;
 		} else {
-			r.model.rotation.z = r.rotation.roll
-				? _.isFunction(r.rotation.roll)
-					? r.rotation.roll(r, entities, args)
-					: r.model.rotation.z + r.rotation.roll
+			r.model.rotation.z = r.rotation.z
+				? _.isFunction(r.rotation.z)
+					? r.rotation.z(r, entities, args)
+					: r.model.rotation.z + r.rotation.z
 				: r.model.rotation.z;
-			r.model.rotation.x = r.rotation.pitch
-				? _.isFunction(r.rotation.pitch)
-					? r.rotation.pitch(r, entities, args)
-					: r.model.rotation.x + r.rotation.pitch
+			r.model.rotation.x = r.rotation.x
+				? _.isFunction(r.rotation.x)
+					? r.rotation.x(r, entities, args)
+					: r.model.rotation.x + r.rotation.x
 				: r.model.rotation.x;
-			r.model.rotation.y = r.rotation.yaw
-				? _.isFunction(r.rotation.yaw)
-					? r.rotation.yaw(r, entities, args)
-					: r.model.rotation.y + r.rotation.yaw
+			r.model.rotation.y = r.rotation.y
+				? _.isFunction(r.rotation.y)
+					? r.rotation.y(r, entities, args)
+					: r.model.rotation.y + r.rotation.y
 				: r.model.rotation.y;
 		}
 	}

@@ -14,8 +14,8 @@ export default async scene => {
 		box: {
 			model: MeshBuilder.CreateBox("", {}, scene),
 			rotation: {
-				yaw: 0.01,
-				roll: 0.01
+				y: 0.01,
+				z: 0.01
 			}
 		}
 	};
