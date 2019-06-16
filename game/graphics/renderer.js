@@ -1,4 +1,4 @@
-import { Engine } from "babylonjs";
+import { Engine, IOfflineProvider, Tools, Observable, IFileRequest } from "babylonjs";
 import { resolveAsync } from "expo-asset-utils";
 
 global.HTMLElement = () => false;
@@ -36,5 +36,47 @@ const textureLoader = {
 };
 
 Engine._TextureLoaders.push(textureLoader);
+
+//-- https://github.com/BabylonJS/Babylon.js/blob/ea8a810bc385c5c5f26163c6833749a80e223a16/src/Misc/tools.ts
+
+/*
+Tools.LoadFile = (url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError) => {
+  console.log("Tools.LoadFile", {
+    url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError
+  });
+
+  onError();
+
+  return {
+      onCompleteObservable: {
+        add: () => { }
+      },
+      abort: () => { },
+  };
+};
+*/
+
+const lf = Tools.LoadFile;
+
+Tools.LoadFile = (url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError) => {
+  console.log("Tools.LoadFile", { url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError });
+  return lf.bind(Tools)(url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError);
+}
+
+const Database = (urlToScene, manifedChecked) => {
+  console.log("Database", urlToScene)
+  manifedChecked(true)
+
+  return {
+    IDBStorageEnabled  : true,
+    enableSceneOffline: () => true,
+    enableTexturesOffline: () => true,
+    open: successCallback => console.log("Database.open"),
+    loadImage: (...args) => console.log("Database.loadImage", args),
+    loadFile: (...args) => console.log("Database.loadFile", args)
+  };
+}
+
+Engine.OfflineProviderFactory = Database;
 
 export default Engine;
