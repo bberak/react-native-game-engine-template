@@ -6,11 +6,8 @@ const assetCache = {};
 
 const getAsset = uri => {
 	
-	if (!assetCache[uri]) {
-		console.log("CACHE MISS");
+	if (!assetCache[uri]) 
 		assetCache[uri] = resolveAsync(uri);
-	} else
-		console.log("CACHE HIT");
 
 	return assetCache[uri];
 }
