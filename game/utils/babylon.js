@@ -1,33 +1,21 @@
 import { SpriteManager } from "babylonjs";
 import { Asset  } from "expo-asset";
 import { resolveAsync } from "expo-asset-utils";
+import _ from "lodash";
 
-const assetCache = {};
+const getSpriteManager = async (name, ref, capacity, size, scene) => {
 
-const getAsset = uri => {
-	
-	if (!assetCache[uri]) 
-		assetCache[uri] = resolveAsync(uri);
-
-	return assetCache[uri];
-}
-
-const getSpriteManager = async (name, module, capacity, size, scene) => {
-
-	const { uri } = Asset.fromModule(module);
-
-	const asset = await getAsset(uri);
+	const asset = await resolveAsync(ref);
 
 	if (!scene.spriteMangers)
 		scene.spriteMangers = {};
 
 	if (!scene.spriteMangers[name])
-		scene.spriteMangers[name] = new SpriteManager(name, uri, capacity, size, scene); 
+		scene.spriteMangers[name] = new SpriteManager(name, asset.localUri, capacity, size, scene); 
 
 	return scene.spriteMangers[name];
 };
 
 export {
-	getSpriteManager,
-	getAsset
+	getSpriteManager
 }
