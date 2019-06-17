@@ -60,7 +60,9 @@ const lf = Tools.LoadFile;
 
 Tools.LoadFile = (url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError) => {
   console.log("Tools.LoadFile", { url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError });
-  return lf.bind(Tools)(url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError);
+
+  if (url.endsWith(".png"))
+    return lf.bind(Tools)(url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError);
 }
 
 const Database = (urlToScene, manifedChecked) => {
