@@ -1,5 +1,14 @@
-import { Engine, IOfflineProvider, Tools, Observable, IFileRequest } from "babylonjs";
+import {
+  Engine,
+  IOfflineProvider,
+  Tools,
+  Observable,
+  IFileRequest,
+  WebRequest
+} from "babylonjs";
 import { resolveAsync } from "expo-asset-utils";
+import { readAsStringAsync } from "expo-file-system";
+import { decode } from "base64-arraybuffer";
 
 global.HTMLElement = () => false;
 global.HTMLImageElement = () => false;
@@ -37,47 +46,67 @@ const textureLoader = {
 
 Engine._TextureLoaders.push(textureLoader);
 
-//-- https://github.com/BabylonJS/Babylon.js/blob/ea8a810bc385c5c5f26163c6833749a80e223a16/src/Misc/tools.ts
+const lf = Tools.LoadFile;
 
-/*
-Tools.LoadFile = (url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError) => {
+Tools.LoadFile = (
+  url,
+  onSuccess,
+  onProgress,
+  offlineProvider,
+  useArrayBuffer,
+  onError
+) => {
   console.log("Tools.LoadFile", {
-    url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError
+    url,
+    onSuccess,
+    onProgress,
+    offlineProvider,
+    useArrayBuffer,
+    onError
   });
 
-  onError();
+  if ([".png", ".jpg", ".jpeg", ".gif"].find(ext => url.endsWith(ext)))
+    return lf.bind(Tools)(
+      url,
+      onSuccess,
+      onProgress,
+      offlineProvider,
+      useArrayBuffer,
+      onError
+    );
 
-  return {
+  resolveAsync(url)
+    .then(asset => readAsStringAsync(asset.localUri, { encoding: "Base64" }))
+    .then(decode)
+    .then(onSuccess);
+
+    return {
       onCompleteObservable: {
         add: () => { }
       },
       abort: () => { },
-  };
+    };
 };
-*/
-
-const lf = Tools.LoadFile;
-
-Tools.LoadFile = (url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError) => {
-  console.log("Tools.LoadFile", { url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError });
-
-  if (url.endsWith(".png"))
-    return lf.bind(Tools)(url, onSuccess, onProgress, offlineProvider, useArrayBuffer, onError);
-}
 
 const Database = (urlToScene, manifedChecked) => {
-  console.log("Database", urlToScene)
-  manifedChecked(true)
+  console.log("Database", urlToScene);
+  manifedChecked(true);
 
   return {
-    IDBStorageEnabled  : true,
-    enableSceneOffline: () => true,
-    enableTexturesOffline: () => true,
-    open: successCallback => console.log("Database.open"),
+    IDBStorageEnabled: false,
+    enableSceneOffline: () => false,
+    enableTexturesOffline: () => false,
+    open: successCallback => { console.log("Database.open"); successCallback(); },
     loadImage: (...args) => console.log("Database.loadImage", args),
-    loadFile: (...args) => console.log("Database.loadFile", args)
+    loadFile: (url, sceneLoaded, progressCallBack, errorCallback, useArrayBuffer) => {
+      console.log("Database.loadFile", { url, sceneLoaded, progressCallBack, errorCallback, useArrayBuffer });
+      resolveAsync(url)
+        .then(asset => readAsStringAsync(asset.localUri, { encoding: "Base64" }))
+        .then(decode)
+        .then(sceneLoaded);
+    }
   };
-}
+};
 
 Engine.OfflineProviderFactory = Database;
 

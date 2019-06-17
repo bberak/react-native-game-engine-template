@@ -10,6 +10,7 @@
     "@popmotion/popcorn": "^0.4.0",
     "babylonjs": "^4.0.3",
     "babylonjs-loaders": "^4.0.3",
+    "base64-arraybuffer": "^0.2.0",
     "expo": "^33.0.0",
     "expo-asset": "^5.0.1",
     "expo-asset-utils": "^1.1.1",
