@@ -12,9 +12,13 @@ export default async scene => {
 
 	const asset = await resolveAsync(Model);
 
-	await SceneLoader.AppendAsync(asset.localUri, null, scene, scene => {
-		console.log("SceneLoader.AppendAsync")
-	});
+	try {
+		await SceneLoader.AppendAsync(asset.uri, null, scene);
+	} 
+	catch (err) {
+		console.error(err);
+	}
+	
 
 	const entities = {
 		scene,

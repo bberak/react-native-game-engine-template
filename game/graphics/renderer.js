@@ -4,7 +4,8 @@ import {
   Tools,
   Observable,
   IFileRequest,
-  WebRequest
+  WebRequest,
+  Database
 } from "babylonjs";
 import { resolveAsync } from "expo-asset-utils";
 import { readAsStringAsync } from "expo-file-system";
@@ -46,6 +47,7 @@ const textureLoader = {
 
 Engine._TextureLoaders.push(textureLoader);
 
+/*
 const lf = Tools.LoadFile;
 
 Tools.LoadFile = (
@@ -87,7 +89,9 @@ Tools.LoadFile = (
       abort: () => { },
     };
 };
+*/
 
+/*
 const Database = (urlToScene, manifedChecked) => {
   console.log("Database", urlToScene);
   manifedChecked(true);
@@ -109,5 +113,9 @@ const Database = (urlToScene, manifedChecked) => {
 };
 
 Engine.OfflineProviderFactory = Database;
+*/
+
+Engine.OfflineProviderFactory = null;
+Database.IDBStorageEnabled = true;
 
 export default Engine;
