@@ -8,13 +8,7 @@
   },
   "dependencies": {
     "@popmotion/popcorn": "^0.4.0",
-    "babylonjs": "^4.0.3",
-    "babylonjs-loaders": "^4.0.3",
-    "base64-arraybuffer": "^0.2.0",
     "expo": "^33.0.0",
-    "expo-asset": "^5.0.1",
-    "expo-asset-utils": "^1.1.1",
-    "expo-file-system": "^5.0.1",
     "lodash": "^4.17.11",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",

@@ -1,5 +1,3 @@
-import { Vector3, Sprite } from "babylonjs";
-import { getSpriteManager } from "../utils/babylon";
 import Sheet from "../../assets/spritesheets/cuphead.png";
 
 export default async ({ scene, x = 0, z = 0, y = 0 }) => {
