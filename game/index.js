@@ -14,6 +14,7 @@ class Game extends React.Component {
     const scene = new Scene(renderer);
     const entities = await Entities(scene);
 
+    renderer.enableOfflineSupport = false;
     scene.createDefaultLight();
     scene.clearColor = Color3.Blue();
     

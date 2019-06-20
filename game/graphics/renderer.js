@@ -4,8 +4,7 @@ import {
   Tools,
   Observable,
   IFileRequest,
-  WebRequest,
-  Database
+  WebRequest
 } from "babylonjs";
 import { resolveAsync } from "expo-asset-utils";
 import { readAsStringAsync } from "expo-file-system";
@@ -91,7 +90,6 @@ Tools.LoadFile = (
 };
 */
 
-/*
 const Database = (urlToScene, manifedChecked) => {
   console.log("Database", urlToScene);
   manifedChecked(true);
@@ -113,9 +111,6 @@ const Database = (urlToScene, manifedChecked) => {
 };
 
 Engine.OfflineProviderFactory = Database;
-*/
-
-Engine.OfflineProviderFactory = null;
 Database.IDBStorageEnabled = true;
 
 export default Engine;
