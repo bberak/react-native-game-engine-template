@@ -1,36 +1,28 @@
-import { Vector3, FreeCamera, MeshBuilder, SceneLoader, Tools } from "babylonjs";
-import "babylonjs-loaders";
-import { Sprite } from "./components";
-import { resolveAsync } from "expo-asset-utils";
-import Model from "../assets/models/fighter.glb";
+import { THREE } from "expo-three";
+import Box from "./components/box";
+import { clean } from "./utils/three";
+import { screen } from "./utils";
 
-export default async scene => {
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(120, screen.width / screen.height, 1, 1000);
 
-	const camera = new FreeCamera("Camera", new Vector3(10, 10, 10), scene);
-	
-	camera.setTarget(Vector3.Zero());
+export default async () => {
+	clean(scene);
+	const ambient = new THREE.AmbientLight(0xffffff, 0.3)
+	const sunlight = new THREE.DirectionalLight(0xffffff, 0.5);
 
-	const asset = await resolveAsync(Model);
+    sunlight.position.set(0, 50, 0);
 
-	try {
-		await SceneLoader.AppendAsync(asset.uri, null, scene);
-	} 
-	catch (err) {
-		console.error(err);
-	}
-	
+    scene.add(ambient)
+    scene.add(sunlight)
+
+	camera.position.set(0, 8, 0);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 	const entities = {
 		scene,
 		camera,
-		sprite: await Sprite({ scene }),
-		box: {
-			model: MeshBuilder.CreateBox("", {}, scene),
-			rotation: {
-				y: 0.01,
-				z: 0.01
-			}
-		}
+		box: Box({ scene })
 	};
 
 	return entities;

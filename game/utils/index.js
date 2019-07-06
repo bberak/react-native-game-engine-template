@@ -1,5 +1,6 @@
 import _ from "lodash";
-import * as popcorn from '@popmotion/popcorn';
+import { interpolate } from '@popmotion/popcorn';
+import { Dimensions } from "react-native";
 
 const any = (arr = [], b = "", c) => {
 	if (c) {
@@ -96,19 +97,7 @@ const log = label => data => {
 	return data;
 }
 
-const find  = _.find;
-
-const filter = _.filter;
-
-const clamp = constrain;
-
-const interpolate = popcorn.interpolate;
-
 const randomInt = (min = 0, max = 1) => Math.floor(Math.random() * (max - min + 1) + min);
-
-const once = _.once;
-
-const memoize = _.memoize;
 
 const throttle = (func, interval, defaultValue) => {
 	let last = 0;
@@ -123,10 +112,12 @@ const throttle = (func, interval, defaultValue) => {
 	}
 }
 
-export {
+const screen = Dimensions.get("window");
+
+module.exports = {
 	any,
-	find,
-	filter,
+	find: _.find,
+	filter: _.filter,
 	first,
 	firstKey,
 	all,
@@ -136,14 +127,15 @@ export {
 	negative,
 	remap,
 	constrain,
-	clamp,
+	clamp: constrain,
 	pipe,
 	id,
 	cond,
 	interpolate,
 	log, 
 	randomInt,
-	once,
-	memoize,
-	throttle
+	once: _.once,
+	memoize: _.memoize,
+	throttle,
+	screen
 }
