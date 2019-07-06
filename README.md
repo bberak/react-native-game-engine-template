@@ -2,7 +2,7 @@
 
 This repo is designed to be a sort of game kickstarter. It contains some general systems and components that should be somewhat useful when developing a variety of games using [React Native Game Engine](https://github.com/bberak/react-native-game-engine).
 
-The underlying renderer is [Babylon.js](https://github.com/BabylonJS/Babylon.js) which has been monkey patched to work in a React Native context.
+The underlying renderer is [ThreeJS](https://github.com/mrdoob/three.js) which has been extended with [Expo-Three](https://github.com/expo/expo-three).
 
 The template will contain both 3D and 2D game entities (sprites) and potentially some particles.
 
