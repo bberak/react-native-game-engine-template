@@ -7,6 +7,7 @@ import _ from "lodash";
 THREE.suppressExpoWarnings();
 
 class ThreeView extends PureComponent {
+
   onShouldReloadContext = () => {
     return Platform.OS === "android";
   };
@@ -19,6 +20,7 @@ class ThreeView extends PureComponent {
       height,
     });
     this.renderer.setClearColor(0x020202, 1.0);
+    this.gl = gl;
   };
 
   onResize = ({ width, height, scale: pixelRatio }) => {
@@ -29,15 +31,15 @@ class ThreeView extends PureComponent {
   };
 
   render() {
-    if (this.renderer) {
-      this.renderer.render(this.props.scene, this.props.camera)
-    } 
+    if (this.renderer && this.gl) {
+      this.renderer.render(this.props.scene, this.props.camera);
+      this.gl.endFrameEXP();
+    }
     return (
       <ExpoGraphics.View
         onContextCreate={this.onContextCreate}
         onResize={this.onResize}
         onShouldReloadContext={this.onShouldReloadContext}
-        onRender={() => { }}
         shouldIgnoreSafeGaurds
         isShadowsEnabled
       />
