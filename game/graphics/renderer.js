@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Platform } from "react-native";
 import ExpoTHREE, { THREE } from 'expo-three';
-import ExpoGraphics from 'expo-graphics'
+import ExpoGraphics from 'expo-graphics-rnge'
 import _ from "lodash";
 
 THREE.suppressExpoWarnings();
