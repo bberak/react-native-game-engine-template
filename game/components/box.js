@@ -1,4 +1,4 @@
-import { THREE } from "expo-three";
+import * as THREE from "three";
 
 export default Box = ({ scene, x = 0, y = 0, z = 0, width = 1.1, breadth = 1.1, height = 1.1, scale = 1, color = 0x22BCE6 }) => {
 	const geometry = new THREE.BoxGeometry(width, height, breadth);

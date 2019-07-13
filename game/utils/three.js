@@ -1,4 +1,4 @@
-import { THREE } from "expo-three";
+import * as THREE from "three";
 
 export const clean = obj => {
 	while (obj.children.length > 0) {

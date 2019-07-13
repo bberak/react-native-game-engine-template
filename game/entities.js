@@ -1,4 +1,4 @@
-import { THREE } from "expo-three";
+import * as THREE from "three";
 import Box from "./components/box";
 import { clean } from "./utils/three";
 import { screen } from "./utils";

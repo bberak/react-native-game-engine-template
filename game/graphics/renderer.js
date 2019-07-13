@@ -1,10 +1,14 @@
 import React, { PureComponent } from "react";
 import { Platform } from "react-native";
-import ExpoTHREE, { THREE } from 'expo-three';
-import ExpoGraphics from 'expo-graphics-rnge'
+import ExpoGraphics from "expo-graphics-rnge";
+import ExpoTHREE from "expo-three";
+import suppressExpoWarnings from "expo-three/build/suppressWarnings";
+import * as THREE from "three";
 import _ from "lodash";
+import { EffectComposer }  from "three/examples/jsm/postprocessing/EffectComposer";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 
-THREE.suppressExpoWarnings();
+suppressExpoWarnings();
 
 class ThreeView extends PureComponent {
 
@@ -21,6 +25,15 @@ class ThreeView extends PureComponent {
     });
     this.renderer.setClearColor(0x020202, 1.0);
     this.gl = gl;
+    this.composer = new EffectComposer(this.renderer);
+
+    const passes = [
+      new RenderPass(this.props.scene, this.props.camera),
+      ...this.props.passes
+    ];
+
+    passes.forEach(p => this.composer.addPass(p))
+    passes[passes.length-1].renderToScreen = true;
   };
 
   onResize = ({ width, height, scale: pixelRatio }) => {
@@ -31,8 +44,8 @@ class ThreeView extends PureComponent {
   };
 
   render() {
-    if (this.renderer && this.gl) {
-      this.renderer.render(this.props.scene, this.props.camera);
+     if (this.composer && this.gl) {
+      this.composer.render();
       this.gl.endFrameEXP();
     }
     return (
