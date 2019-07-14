@@ -1,6 +1,33 @@
 import _ from "lodash";
 import { interpolate } from '@popmotion/popcorn';
 import { Dimensions } from "react-native";
+import * as three from "./three";
+
+const remove = (entities, key) => {
+	const entity = entities[key];
+	const scene = entities.scene;
+
+	if (entity.model)
+		three.remove(scene, entity.model);
+
+	if (entity.light)
+		three.remove(scene, entity.light);
+
+	if (entity.collisions && entity.collisions.hitBoxHelper)
+		three.remove(scene, entity.collisions.hitBoxHelper);
+
+	if (entity.particles) {
+		Object.keys(entity.particles).forEach(k => {
+			const emitter = entity.particles[k].emitter
+			if (emitter)
+				three.remove(scene, emitter);
+		})
+	}
+
+	delete entities[key];
+
+	return entities;
+};
 
 const any = (arr = [], b = "", c) => {
 	if (c) {
@@ -115,6 +142,7 @@ const throttle = (func, interval, defaultValue) => {
 const screen = Dimensions.get("window");
 
 module.exports = {
+	remove,
 	any,
 	find: _.find,
 	filter: _.filter,

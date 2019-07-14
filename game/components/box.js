@@ -19,7 +19,7 @@ export default Box = ({ scene, x = 0, y = 0, z = 0, width = 1.1, breadth = 1.1, 
 
 	return {
 		model: cube,
-		removable: true,
+		removable: false,
 		rotation: {
 			y: 0.01,
 			z: 0.01
