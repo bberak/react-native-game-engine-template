@@ -24,8 +24,12 @@ export default async () => {
 		scene,
 		camera,
 		box: Box({ scene }),
-		cuphead: await Cuphead({ scene, x: 5})
+		cuphead: await Cuphead({ scene, x: 5}),
+		//cuphead2: await Cuphead({ scene, x: -5}),
 	};
+
+	entities.cuphead.actions.walk();
+	//entities.cuphead2.actions.walk();
 
 	return entities;
 };

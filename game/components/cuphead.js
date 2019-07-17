@@ -2,9 +2,21 @@ import ExpoTHREE from "expo-three";
 import * as THREE from "three";
 import Sprite from "./sprite";
 
-const spriteSheet = ExpoTHREE.loadAsync(require("../../assets/spritesheets/cuphead.png"));
+const spriteSheet = ExpoTHREE.loadAsync(
+	require("../../assets/spritesheets/cuphead.png")
+);
 
-export default async (args) => {
+export default async args => {
+	const s = await Sprite({
+		...args,
+		spriteSheet,
+		columns: 16,
+		rows: 8,
+		actions: {
+			joy: { start: { column: 0, row: 0 }, end: { column: 10, row: 0 }, speed: 0.3 },
+			walk: { start: { column: 0, row: 1 }, end: { column: 12, row: 1 }, speed: 0.3 }
+		}
+	});
 
-	return Sprite({ ...args, spriteSheet, columns: 16, rows: 8 })
+	return s;
 };

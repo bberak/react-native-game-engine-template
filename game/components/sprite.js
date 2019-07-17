@@ -1,17 +1,12 @@
 import * as THREE from "three";
-import Sheet from "../../assets/spritesheets/cuphead.png";
 
-//-- const s = Sprite({ sheet, actions: { run: { start: 0, end: 10, invertU: true, invertV: true, repeat: true  } } });
+export default async ({ scene, x = 0, z = 0, y = 0, spriteSheet, rows, columns, actions: mappings = {} }) => {
+	
+	const texture = await Promise.resolve(spriteSheet);
+	texture.needsUpdate = true;
+	texture.repeat.set(1 / columns, 1 / rows);
 
-//-- s.sprite.run();
-
-export default async ({ scene, x = 0, z = 0, y = 0, spriteSheet, rows, columns, actionMappings: actions = {} }) => {
-
-	const map = await Promise.resolve(spriteSheet);
-	map.needsUpdate = true;
-	map.repeat.set(1 / columns, 1 / rows);
-
-	const spriteMaterial = new THREE.SpriteMaterial({ map, color: 0xffffff });
+	const spriteMaterial = new THREE.SpriteMaterial({ map: texture, color: 0xffffff });
 	const sprite = new THREE.Sprite(spriteMaterial);
 	
 	sprite.position.x = x;
@@ -23,13 +18,22 @@ export default async ({ scene, x = 0, z = 0, y = 0, spriteSheet, rows, columns, 
 	const actions = {};
 	const timelines = {};
 
-	Object.keys(actionMappings).forEach(key => {
+	Object.keys(mappings).forEach(key => {
 		actions[key] = () => {
-			let { start, end } = actionMappings[key];
+			let { start, end, repeat = true, speed = 1 } = mappings[key];
 			end = end || start;
 
 			timelines.action = {
-
+				while: true,
+				index: 0,
+				update(entity, entities, timeline, args) {
+					const frameColumn = repeat ? timeline.index % Math.max(end.column - start.column, 1) + start.column : Math.min(timeline.index + start.column, end.column);
+					const frameRow = repeat ? timeline.index % Math.max(end.row - start.row, 1) + start.row : Math.min(timeline.index + start.row, end.row);
+					
+					texture.offset.x = Math.trunc(frameColumn) / columns;
+					texture.offset.y = Math.trunc(frameRow) / rows;
+					timeline.index += speed;
+				}
 			}
 		}
 	})
