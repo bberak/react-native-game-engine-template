@@ -1,35 +1,42 @@
+import * as THREE from "three";
 import Sheet from "../../assets/spritesheets/cuphead.png";
 
-export default async ({ scene, x = 0, z = 0, y = 0 }) => {
+//-- const s = Sprite({ sheet, actions: { run: { start: 0, end: 10, invertU: true, invertV: true, repeat: true  } } });
 
-	const manager = await getSpriteManager("player", Sheet, 1, { width: 103.0625, height: 113.125 }, scene);
-	const sprite = new Sprite("player", manager);
+//-- s.sprite.run();
+
+export default async ({ scene, x = 0, z = 0, y = 0, spriteSheet, rows, columns, actionMappings: actions = {} }) => {
+
+	const map = await Promise.resolve(spriteSheet);
+	map.needsUpdate = true;
+	map.repeat.set(1 / columns, 1 / rows);
+
+	const spriteMaterial = new THREE.SpriteMaterial({ map, color: 0xffffff });
+	const sprite = new THREE.Sprite(spriteMaterial);
 	
 	sprite.position.x = x;
 	sprite.position.y = y;
 	sprite.position.z = z;
-	sprite.size = 2.5
-	sprite.cellIndex = 48;
-	sprite.playAnimation(50, 61, true, 100);
-	sprite.invertU = 1;
-	
+
+	scene.add(sprite);
+
+	const actions = {};
+	const timelines = {};
+
+	Object.keys(actionMappings).forEach(key => {
+		actions[key] = () => {
+			let { start, end } = actionMappings[key];
+			end = end || start;
+
+			timelines.action = {
+
+			}
+		}
+	})
+
 	return {
 		model: sprite,
-		removable: false,
-		damage: {
-			amount: 9999
-		},
-		gravity: false,
-		player: true,
-		animations: {},
-		physics: {
-			mass: 2.5,
-			maxSpeed: 0.5,
-			forces: new Vector3(),
-			acceleration: new Vector3(),
-			velocity: new Vector3(),
-			position: sprite.position,
-			damping: 0.118
-		}
+		actions,
+		timelines
 	};
 };

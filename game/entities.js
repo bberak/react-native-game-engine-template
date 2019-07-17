@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import Box from "./components/box";
 import Camera from "./components/camera";
+import Cuphead from "./components/cuphead";
 import { clean } from "./utils/three";
 
 const scene = new THREE.Scene();
@@ -22,7 +23,8 @@ export default async () => {
 	const entities = {
 		scene,
 		camera,
-		box: Box({ scene })
+		box: Box({ scene }),
+		cuphead: await Cuphead({ scene, x: 5})
 	};
 
 	return entities;
