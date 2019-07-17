@@ -1,8 +1,10 @@
 import * as THREE from "three";
 
 export default async ({ scene, x = 0, z = 0, y = 0, spriteSheet, rows, columns, actions: mappings = {} }) => {
-	
-	const texture = await Promise.resolve(spriteSheet);
+
+	let texture = await Promise.resolve(spriteSheet);
+	texture = texture.clone();
+  	texture.isDataTexture = true; //-- Forces passing to `gl.texImage2D(...)` verbatim
 	texture.needsUpdate = true;
 	texture.repeat.set(1 / columns, 1 / rows);
 
