@@ -1,10 +1,10 @@
 import * as THREE from "three";
+import { cloneTexture } from "../utils/three";
 
 export default async ({ scene, x = 0, z = 0, y = 0, spriteSheet, rows, columns, actions: mappings = {} }) => {
 
-	let texture = await Promise.resolve(spriteSheet);
-	texture = texture.clone();
-  	texture.isDataTexture = true; //-- Forces passing to `gl.texImage2D(...)` verbatim
+	const texture = cloneTexture(await Promise.resolve(spriteSheet));
+
 	texture.needsUpdate = true;
 	texture.repeat.set(1 / columns, 1 / rows);
 
@@ -29,8 +29,8 @@ export default async ({ scene, x = 0, z = 0, y = 0, spriteSheet, rows, columns, 
 				while: true,
 				index: 0,
 				update(entity, entities, timeline, args) {
-					const frameColumn = repeat ? timeline.index % Math.max(end.column - start.column, 1) + start.column : Math.min(timeline.index + start.column, end.column);
-					const frameRow = repeat ? timeline.index % Math.max(end.row - start.row, 1) + start.row : Math.min(timeline.index + start.row, end.row);
+					const frameColumn = repeat ? timeline.index % (end.column - start.column + 1) + start.column : Math.min(timeline.index + start.column, end.column);
+					const frameRow = repeat ? timeline.index % (end.row - start.row + 1) + start.row : Math.min(timeline.index + start.row, end.row);
 					
 					texture.offset.x = Math.trunc(frameColumn) / columns;
 					texture.offset.y = Math.trunc(frameRow) / rows;

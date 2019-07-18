@@ -17,7 +17,7 @@ export default async () => {
     scene.add(ambient)
     scene.add(sunlight)
 
-	camera.position.set(0, 0, 5);
+	camera.position.set(0, 0, 6);
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 	const entities = {

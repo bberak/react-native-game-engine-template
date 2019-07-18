@@ -51,11 +51,20 @@ export const reparent = (subject, newParent) => {
 	newParent.add(subject);
 };
 
-export const getSize = model => {
+export const size = model => {
 	const currentSize = new THREE.Vector3();
 	const currentBox = new THREE.Box3().setFromObject(model);
 
 	currentBox.getSize(currentSize);
 
 	return currentSize;
+};
+
+export const cloneTexture = texture => {
+	const clone = texture.clone();
+
+ 	//-- Forces passing to `gl.texImage2D(...)` verbatim
+  	clone.isDataTexture = true;
+
+  	return clone;
 };

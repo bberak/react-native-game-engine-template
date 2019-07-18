@@ -13,7 +13,7 @@ export default async args => {
 		columns: 16,
 		rows: 8,
 		actions: {
-			joy: { start: { column: 0, row: 0 }, end: { column: 10, row: 0 }, speed: 0.3 },
+			joy: { start: { column: 0, row: 0 }, end: { column: 9, row: 0 }, speed: 0.3 },
 			walk: { start: { column: 0, row: 1 }, end: { column: 12, row: 1 }, speed: 0.3 }
 		}
 	});
