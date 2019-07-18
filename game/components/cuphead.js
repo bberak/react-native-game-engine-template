@@ -1,5 +1,4 @@
 import ExpoTHREE from "expo-three";
-import * as THREE from "three";
 import Sprite from "./sprite";
 
 const spriteSheet = ExpoTHREE.loadAsync(
