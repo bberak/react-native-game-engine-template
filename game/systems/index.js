@@ -4,8 +4,10 @@ import Particles from "./particles";
 import Removal from "./removal";
 import Rotation from "./rotation";
 import Timeline from "./timeline";
+import StickController from "../utils/stick-controller";
 
 export default [
+	StickController(),
 	CameraShake,
 	CameraControls(),
 	Particles,
