@@ -23,6 +23,12 @@ class HUDRenderer extends React.Component {
       y = 0
     } = this.props.stickController || {};
 
+    const pDistance = Math.hypot(x, y);
+    const pX = x * (2.5 * stickRadius) / (pDistance || 1);
+    const pY = y * (2.5 * stickRadius) / (pDistance || 1);
+    const pSize = 10 * (2 + pDistance * 1.5)
+    const pAngle = Math.atan2(pY, pX);
+
     return [
       <View
         key={"stick"}
@@ -34,6 +40,21 @@ class HUDRenderer extends React.Component {
             borderRadius: stickRadius * 2,
             left: stickPosition.x - stickRadius,
             top: stickPosition.y - stickRadius,
+            backgroundColor: pDistance ? "white" : "transparent"
+          }
+        ]}
+      />,
+      <View
+        key={"guide"}
+        style={[
+          styles.container,
+          {
+            width: stickRadius * 4,
+            height: stickRadius * 4,
+            borderRadius: stickRadius * 4,
+            borderWidth: pDistance ? 5 : 0,
+            left: stickPosition.x - stickRadius * 2,
+            top: stickPosition.y - stickRadius * 2,
           }
         ]}
       />,
@@ -42,11 +63,14 @@ class HUDRenderer extends React.Component {
         style={[
           styles.container,
           {
-            width: 10,
-            height: 10,
-            borderRadius: 10,
-            left: stickPosition.x + x * stickRadius - 5,
-            top: stickPosition.y + y * stickRadius - 5,
+            width: pSize,
+            height: pSize,
+            borderWidth: pDistance ? 5 : 0,
+            left: stickPosition.x + pX - pSize * 0.5,
+            top: stickPosition.y + pY - pSize * 0.5,
+            transform: [
+              { rotateZ: `${pAngle}rad`}
+            ]
           }
         ]}
       />,
