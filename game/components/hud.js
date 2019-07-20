@@ -46,7 +46,7 @@ class HUDRenderer extends React.Component {
             height: 10,
             borderRadius: 10,
             left: stickPosition.x + x * stickRadius - 5,
-            top: stickPosition.y - y * stickRadius - 5,
+            top: stickPosition.y + y * stickRadius - 5,
           }
         ]}
       />,
@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     backgroundColor: "transparent",
     borderWidth: 5,
-    borderColor: "white"
+    borderColor: "white",
+    opacity: 0.25
   }
 });
 

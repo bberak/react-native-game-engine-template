@@ -20,42 +20,34 @@ const bPosition = {
   y: screen.height - bRadius * 2.75 - padding
 };
 
-const x = (point, touch) => {
-  return touch.event.pageX - point.x;
+const distance = (touch, pos) => {
+  return Math.hypot(touch.event.pageX - pos.x, touch.event.pageY - pos.y);
 };
 
-const y = (point, touch) => {
-  return touch.event.pageY - point.y;
+const subtract = (touch, pos) => {
+  return { x: touch.event.pageX - pos.x, y: touch.event.pageY - pos.y };
 };
 
-const distance = (point, touch) => {
-  return Math.hypot(x(point, touch), y(point, touch));
-};
+const clamp = (pos, radius) => {
+  const dist = Math.hypot(pos.x, pos.y);
 
-const vector = (point, touch) => {
-  return { x: x(point, touch), y: y(point, touch) };
-};
-
-const clamp = (point, radius) => {
-  const d = Math.hypot(point.x, point.y);
-
-  if (d < radius)
-    return point;
+  if (dist < radius)
+    return pos;
 
     return {
-      x: point.x * (radius / d),
-      y: point.y * (radius / d)
+      x: pos.x * (radius / dist),
+      y: pos.y * (radius / dist)
     }
 };
 
-const normalize = (point, radius) => {
+const normalize = (pos, radius) => {
   return {
-    x: point.x / radius,
-    y: -point.y / radius
+    x: pos.x / radius,
+    y: pos.y / radius
   }
 }
 
-const isTouching = (point, proxmity) => {
+const isTouchingPosition = (pos, proxmity) => {
   let touching = false;
   let id = null;
 
@@ -64,7 +56,7 @@ const isTouching = (point, proxmity) => {
       const down = touches.find(
         t =>
           (t.type == "start" || t.type == "move") &&
-          distance(point, t) < proxmity
+          distance(t, pos) < proxmity
       );
 
       if (down) {
@@ -78,7 +70,7 @@ const isTouching = (point, proxmity) => {
           t =>
             t.type == "move" &&
             t.event.identifier == id &&
-            distance(point, t) > proxmity
+            distance(t, pos) > proxmity
         );
 
       if (up) {
@@ -91,23 +83,23 @@ const isTouching = (point, proxmity) => {
   };
 };
 
-const trackDistanceFrom = (point, radius, proxmity) => {
-  let touch = null;
+const trackDistanceFromPosition = (pos, radius, proxmity) => {
+  let normal = null;
   let id = null;
 
   return touches => {
-    if (!touch) {
+    if (!normal) {
       const down = touches.find(
         t =>
           (t.type == "start" || t.type == "move") &&
-          distance(point, t) < proxmity
+          distance(t, pos) < proxmity
       );
 
       if (down) {
-        const vec = vector(point, down);
+        const vec = subtract(down, pos);
         const clamped = clamp(vec, radius);
 
-        touch = normalize(clamped, radius);
+        normal = normalize(clamped, radius);
         id = down.event.identifier;
       }
     } else {
@@ -115,14 +107,14 @@ const trackDistanceFrom = (point, radius, proxmity) => {
         t =>
           t.type == "move" &&
           t.event.identifier == id &&
-          distance(point, t) < proxmity
+          distance(t, pos) < proxmity
       );
 
       if (move) {
-        const vec = vector(point, move);
+        const vec = subtract(move, pos);
         const clamped = clamp(vec, radius);
         
-        touch = normalize(clamped, radius);
+        normal = normalize(clamped, radius);
       } else {
         const up =
           touches.find(t => t.type == "end" && t.event.identifier == id) ||
@@ -130,23 +122,23 @@ const trackDistanceFrom = (point, radius, proxmity) => {
             t =>
               t.type == "move" &&
               t.event.identifier == id &&
-              distance(point, t) > proxmity
+              distance(t, pos) > proxmity
           );
 
         if (up) {
-          touch = null;
+          normal = null;
           id = null;
         }
       }
     }
 
-    return touch;
+    return normal;
   };
 };
 
-const isTouchingA = isTouching(aPosition, aRadius + 20);
-const isTouchingB = isTouching(bPosition, bRadius + 20);
-const trackDistanceFromStick = trackDistanceFrom(stickPosition, stickRadius, stickRadius + 40)
+const isTouchingA = isTouchingPosition(aPosition, aRadius + 20);
+const isTouchingB = isTouchingPosition(bPosition, bRadius + 20);
+const trackDistanceFromStick = trackDistanceFromPosition(stickPosition, stickRadius, stickRadius + 40)
 
 let previous = {};
 
