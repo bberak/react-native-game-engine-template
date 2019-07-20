@@ -1,27 +1,29 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
 import { screen } from "./index";
 
-class StickControllerRender extends React.PureComponent {
-  render() {
-    return <View style={styles.container} />;
-  }
-}
+const padding = 10;
 
-const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    width: 150,
-    height: 150,
-    backgroundColor: "red"
-  }
-});
+const stickRadius = 50;
+const stickPosition = {
+  x: stickRadius + padding,
+  y: screen.height - stickRadius - padding
+};
+
+const aRadius = 25;
+const aPosition = {
+  x: screen.width - aRadius * 2.75 - padding,
+  y: screen.height - aRadius - padding
+};
+
+const bRadius = 25;
+const bPosition = {
+  x: screen.width - bRadius - padding,
+  y: screen.height - bRadius * 2.75 - padding
+};
 
 let previous = {};
 
 const StickController = (Wrapped = x => x) => (entities, args) => {
   if (!args.stickController) {
-
     const current = {
       x: -1,
       y: 1,
@@ -29,13 +31,13 @@ const StickController = (Wrapped = x => x) => (entities, args) => {
       b: false
     };
 
-    args.stickController = Object.assign({}, current, { previous });
+    args.stickController = Object.assign(
+      { stickRadius, stickPosition, aRadius, aPosition, bRadius, bPosition },
+      current,
+      { previous }
+    );
 
     previous = current;
-  }
-
-  if (!entities.stickController) {
-    entities.stickController = { renderer: StickControllerRender }
   }
 
   return Wrapped(entities, args);

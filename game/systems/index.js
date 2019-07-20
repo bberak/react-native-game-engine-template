@@ -4,6 +4,7 @@ import Particles from "./particles";
 import Removal from "./removal";
 import Rotation from "./rotation";
 import Timeline from "./timeline";
+import HUD from "./hud";
 import StickController from "../utils/stick-controller";
 
 export default [
@@ -13,5 +14,6 @@ export default [
 	Particles,
 	Removal,
 	Rotation,
-	Timeline
+	Timeline,
+	HUD
 ];
