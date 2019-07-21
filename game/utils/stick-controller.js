@@ -83,7 +83,9 @@ const isTouchingPosition = (pos, proxmity) => {
   };
 };
 
-const trackDistanceFromPosition = (pos, radius, proxmity) => {
+const neutral = { x: 0, y: 0 };
+
+const trackNormalFromPosition = (pos, radius, proxmity) => {
   let normal = null;
   let id = null;
 
@@ -132,20 +134,20 @@ const trackDistanceFromPosition = (pos, radius, proxmity) => {
       }
     }
 
-    return normal;
+    return normal || neutral;
   };
 };
 
 const isTouchingA = isTouchingPosition(aPosition, aRadius + 20);
 const isTouchingB = isTouchingPosition(bPosition, bRadius + 20);
-const trackDistanceFromStick = trackDistanceFromPosition(stickPosition, stickRadius, stickRadius + 40)
+const trackNormalFromStick = trackNormalFromPosition(stickPosition, stickRadius, stickRadius + 40)
 
 let previous = {};
 
 const StickController = (Wrapped = x => x) => (entities, args) => {
   if (!args.stickController) {
     const current = {
-      ...trackDistanceFromStick(args.touches),
+      ...trackNormalFromStick(args.touches),
       a: isTouchingA(args.touches),
       b: isTouchingB(args.touches)
     };
