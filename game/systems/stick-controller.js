@@ -1,4 +1,4 @@
-import { screen } from "./index";
+import { screen } from "../utils/index";
 
 const padding = 10;
 

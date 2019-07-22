@@ -1,16 +1,16 @@
-import CameraShake from "./camera-shake";
-import CameraControls from "./camera-controls";
+import Camera from "./camera";
 import Particles from "./particles";
 import Removal from "./removal";
 import Rotation from "./rotation";
 import Timeline from "./timeline";
 import HUD from "./hud";
-import StickController from "../utils/stick-controller";
+import StickController from "./stick-controller";
+import SwipeController from "./swipe-controller";
 
 export default [
 	StickController(),
-	CameraShake,
-	CameraControls(),
+	SwipeController()(),
+	Camera(),
 	Particles,
 	Removal,
 	Rotation,
