@@ -22,19 +22,22 @@ export default async ({ scene, x = 0, z = 0, y = 0, spriteSheet, rows, columns, 
 
 	Object.keys(mappings).forEach(key => {
 		actions[key] = () => {
-			let { start, end, repeat = true, speed = 1 } = mappings[key];
+			let { start, end, repeat = true, speed = 1, update } = mappings[key];
 			end = end || start;
 
 			timelines.action = {
 				while: true,
 				index: 0,
 				update(entity, entities, timeline, args) {
-					const frameColumn = repeat ? timeline.index % (end.column - start.column + 1) + start.column : Math.min(timeline.index + start.column, end.column);
-					const frameRow = repeat ? timeline.index % (end.row - start.row + 1) + start.row : Math.min(timeline.index + start.row, end.row);
+					const column = Math.trunc(repeat ? timeline.index % (end.column - start.column + 1) + start.column : Math.min(timeline.index + start.column, end.column));
+					const row = Math.trunc(repeat ? timeline.index % (end.row - start.row + 1) + start.row : Math.min(timeline.index + start.row, end.row));
 					
-					texture.offset.x = Math.trunc(frameColumn) / columns;
-					texture.offset.y = Math.trunc(frameRow) / rows;
+					texture.offset.x = column / columns;
+					texture.offset.y = row / rows;
 					timeline.index += speed;
+
+					if (update)
+						update(entity, entities, { column, row }, args)
 				}
 			}
 		}
