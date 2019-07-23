@@ -236,11 +236,9 @@ const GPUParticleSystem = function(options) {
 GPUParticleSystem.prototype = Object.create( THREE.Object3D.prototype );
 GPUParticleSystem.prototype.constructor = GPUParticleSystem;
 
-
 // Subclass for particle containers, allows for very large arrays to be spread out
 
 const GPUParticleContainer = function ( maxParticles, particleSystem ) {
-
 	THREE.Object3D.apply( this, arguments );
 
 	this.PARTICLE_COUNT = maxParticles || 100000;
@@ -274,7 +272,6 @@ const GPUParticleContainer = function ( maxParticles, particleSystem ) {
 	var color = new THREE.Color();
 
 	this.spawnParticle = function ( options ) {
-
 		var positionStartAttribute = this.particleShaderGeo.getAttribute( 'positionStart' );
 		var startTimeAttribute = this.particleShaderGeo.getAttribute( 'startTime' );
 		var velocityAttribute = this.particleShaderGeo.getAttribute( 'velocity' );
@@ -311,11 +308,9 @@ const GPUParticleContainer = function ( maxParticles, particleSystem ) {
 		positionStartAttribute.array[ i * 3 + 2 ] = position.z + ( particleSystem.random() * positionRandomness );
 
 		if ( smoothPosition === true ) {
-
 			positionStartAttribute.array[ i * 3 + 0 ] += - ( velocity.x * particleSystem.random() );
 			positionStartAttribute.array[ i * 3 + 1 ] += - ( velocity.y * particleSystem.random() );
 			positionStartAttribute.array[ i * 3 + 2 ] += - ( velocity.z * particleSystem.random() );
-
 		}
 
 		// velocity
@@ -354,9 +349,7 @@ const GPUParticleContainer = function ( maxParticles, particleSystem ) {
 		// offset
 
 		if ( this.offset === 0 ) {
-
 			this.offset = this.PARTICLE_CURSOR;
-
 		}
 
 		// counter and cursor
@@ -365,35 +358,27 @@ const GPUParticleContainer = function ( maxParticles, particleSystem ) {
 		this.PARTICLE_CURSOR ++;
 
 		if ( this.PARTICLE_CURSOR >= this.PARTICLE_COUNT ) {
-
 			this.PARTICLE_CURSOR = 0;
-
 		}
 
 		this.particleUpdate = true;
-
 	};
 
 	this.init = function () {
-
 		this.particleSystem = new THREE.Points( this.particleShaderGeo, this.particleShaderMat );
 		this.particleSystem.frustumCulled = false;
 		this.add( this.particleSystem );
-
 	};
 
 	this.update = function ( time ) {
-
 		this.time = time;
 		this.particleShaderMat.uniforms.uTime.value = time;
 
 		this.geometryUpdate();
-
 	};
 
 	this.geometryUpdate = function () {
-
-		if ( this.particleUpdate === true ) {
+		if (this.particleUpdate === true) {
 
 			this.particleUpdate = false;
 
@@ -454,15 +439,11 @@ const GPUParticleContainer = function ( maxParticles, particleSystem ) {
 
 			this.offset = 0;
 			this.count = 0;
-
 		}
-
 	};
 
 	this.dispose = function () {
-
 		this.particleShaderGeo.dispose();
-
 	};
 
 	this.init();

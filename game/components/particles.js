@@ -1,7 +1,7 @@
 import GPUParticleSystem from "../graphics/gpu-particle-system";
 
 export default async ({
-	maxParticles = 25000,
+	maxParticles = 250,
 	noiseTexture,
 	particleTexture,
 	scene,

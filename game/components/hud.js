@@ -45,12 +45,12 @@ class HUDRenderer extends React.Component {
         style={[
           styles.container,
           {
-            width: stickRadius * 4,
-            height: stickRadius * 4,
-            borderRadius: stickRadius * 4,
+            width: stickRadius * 3,
+            height: stickRadius * 3,
+            borderRadius: stickRadius * 3,
             borderWidth: usingStick ? 5 : 0,
-            left: stickPosition.x - stickRadius * 2,
-            top: stickPosition.y - stickRadius * 2,
+            left: stickPosition.x - stickRadius * 1.5,
+            top: stickPosition.y - stickRadius * 1.5,
           }
         ]}
       />,

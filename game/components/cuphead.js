@@ -24,13 +24,13 @@ export default async args => {
 			options: {
 				position: new Vector3(),
 				positionRandomness: 0.3,
-				velocity: new Vector3(2,2,2),
-				velocityRandomness: 0.0,
+				velocity: new Vector3(0, 1, 0),
+				velocityRandomness: 0.05,
 				color: 0xffffff,
-				colorRandomness: 0.2,
+				colorRandomness: 0,
 				turbulence: 0.1,
-				lifetime: 1,
-				size: 5,
+				lifetime: 20,
+				size: 25,
 				sizeRandomness: 1,
 				offset: new Vector3()
 			},
@@ -45,14 +45,11 @@ export default async args => {
 				options.position.y = self.model.position.y + options.offset.y;
 				options.position.z = self.model.position.z + options.offset.z;
 
-				options.velocity.x = 1;
-				options.velocity.y = 1;
-				options.velocity.z = 1;
+				options.velocity.x = 0;
+				options.velocity.y = 0.1;
+				options.velocity.z = 0;
 
-				if (stickController && stickController.a)
-					spawnOptions.spawnRate = 400;
-				else
-					spawnOptions.spawnRate = 0
+				spawnOptions.spawnRate = (stickController && stickController.a) ? 40 : 0;
 			}
 		})
 	};
