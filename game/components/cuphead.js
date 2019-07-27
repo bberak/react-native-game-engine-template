@@ -1,4 +1,4 @@
-import { Vector3 } from "three";
+import { Vector3, Euler } from "three";
 import ExpoTHREE from "expo-three";
 import Sprite from "./sprite";
 import Particles from "./particles";
@@ -21,35 +21,34 @@ export default async args => {
 			...args,
 			noiseTexture,
 			particleTexture,
+			maxParticles: 250,
 			options: {
 				position: new Vector3(),
-				positionRandomness: 0.3,
-				velocity: new Vector3(0, 1, 0),
-				velocityRandomness: 0.05,
+				positionRandomness: 0,
+				velocity: new Vector3(),
+				velocityRandomness: 0,
 				color: 0xffffff,
 				colorRandomness: 0,
 				turbulence: 0.1,
-				lifetime: 20,
+				lifetime: 3,
 				size: 25,
 				sizeRandomness: 1,
-				offset: new Vector3()
+				rotation: new Euler()
 			},
 			spawnOptions: {
 				spawnRate: 0,
 				timeScale: 1
 			},
 			beforeSpawn(self, entities, { options, spawnOptions, tick }, { stickController }) {
-				options.offset.applyEuler(self.model.rotation);
+				options.rotation.set(0, 0, -stickController.heading);
+				options.velocity.set(1, 0, 0);
+				options.velocity.applyEuler(options.rotation);
 
-				options.position.x = self.model.position.x + options.offset.x;
-				options.position.y = self.model.position.y + options.offset.y;
-				options.position.z = self.model.position.z + options.offset.z;
+				options.position.x = self.model.position.x;
+				options.position.y = self.model.position.y;
+				options.position.z = self.model.position.z;
 
-				options.velocity.x = 0;
-				options.velocity.y = 0.1;
-				options.velocity.z = 0;
-
-				spawnOptions.spawnRate = (stickController && stickController.a) ? 40 : 0;
+				spawnOptions.spawnRate = stickController.a ? 40 : 0;
 			}
 		})
 	};

@@ -28,22 +28,23 @@ const subtract = (touch, pos) => {
   return { x: touch.event.pageX - pos.x, y: touch.event.pageY - pos.y };
 };
 
-const clamp = (pos, radius) => {
-  const dist = Math.hypot(pos.x, pos.y);
+const clamp = (vec, radius) => {
+  const dist = Math.hypot(vec.x, vec.y);
 
   if (dist < radius)
-    return pos;
+    return vec;
 
     return {
-      x: pos.x * (radius / dist),
-      y: pos.y * (radius / dist)
+      x: vec.x * (radius / dist),
+      y: vec.y * (radius / dist)
     }
 };
 
-const normalize = (pos, radius) => {
+const normalize = (vec, radius) => {
   return {
-    x: pos.x / radius,
-    y: pos.y / radius
+    x: vec.x / radius,
+    y: vec.y / radius,
+    heading: Math.atan2(vec.y, vec.x)
   }
 }
 
@@ -83,7 +84,7 @@ const isTouchingPosition = (pos, proxmity) => {
   };
 };
 
-const neutral = { x: 0, y: 0 };
+const neutral = { x: 0, y: 0, heading: 0 };
 
 const trackNormalFromPosition = (pos, radius, proxmity) => {
   let normal = null;
