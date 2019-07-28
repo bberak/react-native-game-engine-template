@@ -30,7 +30,7 @@ export default async args => {
 				color: 0xffffff,
 				colorRandomness: 0,
 				turbulence: 0.1,
-				lifetime: 3,
+				lifetime: 1,
 				size: 25,
 				sizeRandomness: 1,
 				rotation: new Euler()
@@ -48,7 +48,15 @@ export default async args => {
 				options.position.y = self.model.position.y;
 				options.position.z = self.model.position.z;
 
-				spawnOptions.spawnRate = stickController.a ? 40 : 0;
+				if (stickController.a) {
+					spawnOptions.spawnRate =  40;
+					options.color = 0xffffff;
+				} else if (stickController.b) {
+					spawnOptions.spawnRate =  40;
+					options.color = 0xff0000;
+				} else {
+					spawnOptions.spawnRate = 0;
+				}
 			}
 		})
 	};
