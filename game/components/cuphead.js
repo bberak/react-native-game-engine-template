@@ -7,19 +7,16 @@ const spriteSheet = ExpoTHREE.loadAsync(
 	require("../../assets/spritesheets/cuphead.png")
 );
 
-const noiseTexture = ExpoTHREE.loadAsync(
-	require("../../assets/textures/perlin.png")
-);
-
 const particleTexture = ExpoTHREE.loadAsync(
 	require("../../assets/textures/particle.png")
 );
 
 export default async args => {
+	const { scene } = args;
+
 	const particles = {
-		stuff: await Particles({
-			...args,
-			noiseTexture,
+		shoot: await Particles({
+			scene,
 			particleTexture,
 			maxParticles: 250,
 			options: {
@@ -39,7 +36,7 @@ export default async args => {
 				spawnRate: 0,
 				timeScale: 1
 			},
-			beforeSpawn(self, entities, { options, spawnOptions, tick }, { stickController }) {
+			beforeSpawn(self, entities, { options, spawnOptions }, { stickController }) {
 				options.rotation.set(0, 0, -stickController.heading);
 				options.velocity.set(1, 0, 0);
 				options.velocity.applyEuler(options.rotation);

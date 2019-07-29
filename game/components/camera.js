@@ -4,7 +4,7 @@ import { noise } from "../utils/perlin";
 
 export default (Camera = () => {
 	const camera = new PerspectiveCamera(
-		120,
+		90,
 		screen.width / screen.height,
 		1,
 		1000

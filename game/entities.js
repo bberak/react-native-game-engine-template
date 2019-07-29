@@ -2,6 +2,7 @@ import * as THREE from "three";
 import Box from "./components/box";
 import Camera from "./components/camera";
 import Cuphead from "./components/cuphead";
+import Portal from "./components/portal";
 import HUD from "./components/hud";
 import { clean } from "./utils/three";
 
@@ -26,12 +27,11 @@ export default async () => {
 		camera,
 		hud: HUD(),
 		box: Box({ scene }),
-		cuphead: await Cuphead({ scene, x: 5}),
-		cuphead2: await Cuphead({ scene, x: -5}),
+		cuphead: await Cuphead({ scene, x: 5 }),
+		portal: await Portal({ scene, x: -5 })
 	};
 
 	entities.cuphead.actions.joy();
-	entities.cuphead2.actions.walk();
 
 	return entities;
 };

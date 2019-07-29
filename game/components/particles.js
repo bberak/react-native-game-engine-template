@@ -1,4 +1,9 @@
+import ExpoTHREE from "expo-three";
 import GPUParticleSystem from "../graphics/gpu-particle-system";
+
+const _noiseTexture = ExpoTHREE.loadAsync(
+	require("../../assets/textures/perlin.png")
+);
 
 export default async ({
 	maxParticles = 250,
@@ -11,7 +16,7 @@ export default async ({
 }) => {
 	const emitter = new GPUParticleSystem({
 		maxParticles,
-		particleNoiseTex: await Promise.resolve(noiseTexture),
+		particleNoiseTex: await Promise.resolve(noiseTexture || _noiseTexture),
 		particleSpriteTex: await Promise.resolve(particleTexture)
 	});
 

@@ -2,7 +2,7 @@ import { all } from "../utils";
 
 const Particles = (entities, args) => {
 	const { time } = args;
-	const entitiesWithParticles = all(entities, e => e.model, e => e.particles);
+	const entitiesWithParticles = all(entities, e => e.particles);
 
 	for (let i = 0; i < entitiesWithParticles.length; i++) {
 		const entity = entitiesWithParticles[i];
