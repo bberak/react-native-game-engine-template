@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { cloneTexture } from "../utils/three";
 
-export default async ({ scene, x = 0, z = 0, y = 0, spriteSheet, rows, columns, actions: mappings = {} }) => {
+export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns, actions: mappings = {} }) => {
 
 	const texture = cloneTexture(await Promise.resolve(spriteSheet));
 
@@ -15,7 +15,7 @@ export default async ({ scene, x = 0, z = 0, y = 0, spriteSheet, rows, columns, 
 	sprite.position.y = y;
 	sprite.position.z = z;
 
-	scene.add(sprite);
+	if (parent) parent.add(sprite);
 
 	const actions = {};
 	const timelines = {};

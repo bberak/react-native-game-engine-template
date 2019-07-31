@@ -9,7 +9,7 @@ export default async ({
 	maxParticles = 250,
 	noiseTexture,
 	particleTexture,
-	scene,
+	parent,
 	options = {},
 	spawnOptions = {},
 	beforeSpawn = () => {}
@@ -20,7 +20,7 @@ export default async ({
 		particleSpriteTex: await Promise.resolve(particleTexture)
 	});
 
-	if (scene) scene.add(emitter);
+	if (parent) parent.add(emitter);
 
 	return {
 		emitter,

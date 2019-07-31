@@ -11,12 +11,11 @@ const particleTexture = ExpoTHREE.loadAsync(
 	require("../../assets/textures/particle.png")
 );
 
-export default async args => {
-	const { scene } = args;
-
+export default async ({ scene, x = 0, y = 0, z = 0}) => {
+	
 	const particles = {
 		shoot: await Particles({
-			scene,
+			parent: scene,
 			particleTexture,
 			maxParticles: 250,
 			options: {
@@ -59,7 +58,10 @@ export default async args => {
 	};
 
 	const sprite = await Sprite({
-		...args,
+		parent: scene,
+		x,
+		y,
+		z,
 		spriteSheet,
 		columns: 16,
 		rows: 8,

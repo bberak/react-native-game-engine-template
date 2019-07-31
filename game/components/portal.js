@@ -1,4 +1,4 @@
-import { Vector3, Euler } from "three";
+import { Vector3 } from "three";
 import ExpoTHREE from "expo-three";
 import Particles from "./particles";
 
@@ -7,9 +7,10 @@ const particleTexture = ExpoTHREE.loadAsync(
 );
 
 export default async ({ scene, x = 0, y = 0, z = 0, height = 0.5, radius = 0.5, verticalSpeed = 0.01, horizontalSpeed = 0.30, color = 0x0000ff }) => {
+	
 	const particles = {
 		swirl: await Particles({
-			scene,
+			parent: scene,
 			particleTexture,
 			maxParticles: 250,
 			options: {
