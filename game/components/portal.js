@@ -6,11 +6,11 @@ const particleTexture = ExpoTHREE.loadAsync(
 	require("../../assets/textures/particle.png")
 );
 
-export default async ({ scene, x = 0, y = 0, z = 0, height = 0.5, radius = 0.5, verticalSpeed = 0.01, horizontalSpeed = 0.30, color = 0x0000ff }) => {
+export default async ({ parent, x = 0, y = 0, z = 0, height = 0.5, radius = 0.5, verticalSpeed = 0.01, horizontalSpeed = 0.30, color = 0x0000ff }) => {
 	
 	const particles = {
 		swirl: await Particles({
-			parent: scene,
+			parent,
 			particleTexture,
 			maxParticles: 250,
 			options: {

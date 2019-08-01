@@ -26,9 +26,9 @@ export default async () => {
 		scene,
 		camera,
 		hud: HUD(),
-		box: Box({ scene }),
-		cuphead: await Cuphead({ scene, x: 5 }),
-		portal: await Portal({ scene, x: -5 })
+		box: Box({ parent: scene }),
+		cuphead: await Cuphead({ parent: scene, x: 5 }),
+		portal: await Portal({ parent: scene, x: -5 })
 	};
 
 	entities.cuphead.actions.joy();

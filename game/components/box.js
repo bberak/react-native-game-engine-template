@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-export default Box = ({ scene, x = 0, y = 0, z = 0, width = 1.1, breadth = 1.1, height = 1.1, scale = 1, color = 0x22BCE6 }) => {
+export default Box = ({ parent, x = 0, y = 0, z = 0, width = 1.1, breadth = 1.1, height = 1.1, scale = 1, color = 0x22BCE6 }) => {
 	const geometry = new THREE.BoxGeometry(width, height, breadth);
 	const material = new THREE.MeshStandardMaterial({ color });
 	const cube = new THREE.Mesh(geometry, material);
@@ -14,7 +14,8 @@ export default Box = ({ scene, x = 0, y = 0, z = 0, width = 1.1, breadth = 1.1, 
 	cube.scale.y = scale;
 	cube.scale.z = scale;
 
-	scene.add(cube);
+	if (parent)
+		parent.add(cube);
 
 	return {
 		model: cube,

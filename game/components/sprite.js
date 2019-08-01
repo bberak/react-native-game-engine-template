@@ -15,7 +15,8 @@ export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns,
 	sprite.position.y = y;
 	sprite.position.z = z;
 
-	if (parent) parent.add(sprite);
+	if (parent) 
+		parent.add(sprite);
 
 	const actions = {};
 	const timelines = {};
@@ -41,7 +42,7 @@ export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns,
 				}
 			}
 		}
-	})
+	});
 
 	return {
 		model: sprite,
