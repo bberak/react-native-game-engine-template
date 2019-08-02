@@ -23,6 +23,7 @@ export default Box = ({ parent, x = 0, y = 0, z = 0, width = 1.1, breadth = 1.1,
 		model: cube,
 		removable: false,
 		rotation: {
+			x: 0.01,
 			y: 0.01,
 			z: 0.01
 		}

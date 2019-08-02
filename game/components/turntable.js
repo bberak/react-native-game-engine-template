@@ -17,10 +17,23 @@ export default Turntable = ({ parent, x = 0, y = 0, z = 0, width = 1.1, radius =
 
 	return {
 		model: cylinder,
-		rotation: {
-			y(self, entities, { swipeController }) {
-				return cylinder.rotation.y + swipeController.oneFingerX * 0.01
+		timelines: {
+			swipe: {
+				while: true,
+				update(self, entities, timeline, { swipeController, touches }) {
+					if (swipeController.oneFingerX) {
+						self.timelines.turn = {
+							momentum: swipeController.oneFingerX,
+							while: (_1, _2, turn) => Math.abs(turn.momentum) > 0.02,
+							update: (_1, _2, turn) => {
+								self.model.rotation.y += 0.01 * turn.momentum
+								turn.momentum *= 0.95
+							}
+						}
+					} else if (touches.find(x => x.type == "start"))
+						delete self.timelines.turn;
+				}
 			}
 		}
-	};
+	}
 };

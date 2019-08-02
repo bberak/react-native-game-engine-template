@@ -48,8 +48,10 @@ const Timeline = (entities, args) => {
       const key = keys[j];
       const timeline = entity.timelines[key];
 
-      start(timeline, args);
-      update(entity, entities, key, timeline, args);
+      if (timeline) {
+        start(timeline, args);
+        update(entity, entities, key, timeline, args);
+      }
     }
   }
 
