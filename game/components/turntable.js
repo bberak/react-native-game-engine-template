@@ -20,7 +20,10 @@ export default Turntable = ({ parent, x = 0, y = 0, z = 0, width = 1.1, radius =
 		timelines: {
 			swipe: {
 				while: true,
-				update(self, entities, timeline, { swipeController, touches }) {
+				update(self, entities, timeline, { swipeController, stickController, touches }) {
+					if (stickController.heading || stickController.a || stickController.b)
+						return;
+
 					if (swipeController.oneFingerX) {
 						self.timelines.turn = {
 							momentum: swipeController.oneFingerX,
