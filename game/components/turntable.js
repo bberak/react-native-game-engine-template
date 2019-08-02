@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { add } from "../utils/three";
 
 export default Turntable = ({ parent, x = 0, y = 0, z = 0, width = 1.1, radius = 4, height = 0.2, color = 0xdddddd, segments = 32, opacity = 1 }) => {
 
@@ -10,10 +11,7 @@ export default Turntable = ({ parent, x = 0, y = 0, z = 0, width = 1.1, radius =
 	cylinder.position.y = y;
 	cylinder.position.z = z;
 	
-	if (parent && parent.model)
-		parent.model.add(cylinder);
-	else if (parent)
-		parent.add(cylinder);
+	add(parent, cylinder);
 
 	return {
 		model: cylinder,

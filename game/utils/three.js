@@ -45,6 +45,16 @@ export const rotateAroundPoint = (
 	obj.position.add(diff);
 };
 
+export const add = (parent, child) => {
+	if (!parent || !child)
+		return;
+
+	const p = parent.model ? parent.model : parent;
+	const c = child.model ? child.model : child;
+
+	p.add(c);
+};
+
 export const reparent = (subject, newParent) => {
 	subject.matrix.copy(subject.matrixWorld);
 	subject.applyMatrix(new THREE.Matrix4().getInverse(newParent.matrixWorld));
