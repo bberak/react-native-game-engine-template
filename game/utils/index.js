@@ -5,22 +5,24 @@ import * as three from "./three";
 
 const remove = (entities, key) => {
 	const entity = entities[key];
-	const scene = entities.scene;
+
+	if (!entity) 
+		return;
 
 	if (entity.model)
-		three.remove(scene, entity.model);
+		three.remove(entity.model.parent, entity.model);
 
 	if (entity.light)
-		three.remove(scene, entity.light);
+		three.remove(entity.light.parent, entity.light);
 
 	if (entity.collisions && entity.collisions.hitBoxHelper)
-		three.remove(scene, entity.collisions.hitBoxHelper);
+		three.remove(entity.collisions.hitBoxHelper.parent, entity.collisions.hitBoxHelper);
 
 	if (entity.particles) {
 		Object.keys(entity.particles).forEach(k => {
 			const emitter = entity.particles[k].emitter
 			if (emitter)
-				three.remove(scene, emitter);
+				three.remove(emitter.parent, emitter);
 		})
 	}
 

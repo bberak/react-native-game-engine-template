@@ -11,9 +11,12 @@ export const clean = obj => {
 	if (obj.texture && obj.texture.dispose) obj.texture.dispose();
 };
 
-export const remove = (scene, obj) => {
-	clean(obj);
-	scene.remove(obj);
+export const remove = (parent, child) => {
+	if (child)
+		clean(child);
+
+	if (parent)
+		parent.remove(child);
 };
 
 export const direction = obj => {
