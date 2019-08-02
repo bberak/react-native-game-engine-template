@@ -20,7 +20,9 @@ export default async ({
 		particleSpriteTex: await Promise.resolve(particleTexture)
 	});
 
-	if (parent) 
+	if (parent && parent.model)
+		parent.model.add(emitter);
+	else if (parent)
 		parent.add(emitter);
 
 	return {

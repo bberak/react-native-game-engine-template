@@ -1,6 +1,24 @@
 import { screen } from "../utils/index";
 
-const neutral = { twoFingersX: 0, twoFingersY: 0 };
+const oneFingerNeutral = { oneFingerX: 0, oneFingerY: 0 };
+
+const getOneFingerMovement = moves => {
+  if (moves.length == 1) {
+    const f1 = moves[0];
+
+    const oneFingerX = f1.delta.locationX;
+    const oneFingerY = f1.delta.locationY;
+
+    return {
+      oneFingerX,
+      oneFingerY
+    };
+  }
+
+  return oneFingerNeutral;
+};
+
+const twoFingersNeutral = { twoFingersX: 0, twoFingersY: 0 };
 
 const getTwoFingerMovement = moves => {
   if (moves.length == 2) {
@@ -16,7 +34,7 @@ const getTwoFingerMovement = moves => {
     };
   }
 
-  return neutral;
+  return twoFingersNeutral;
 };
 
 const getPinch = (moves, pinchThreshold) => {
@@ -47,6 +65,7 @@ const SwipeController = ({ pinchThreshold = 150 } = {}) => (Wrapped = x => x) =>
   if (!args.swipeController) {
     const moves = args.touches.filter(x => x.type == "move");
     const current = {
+      ...getOneFingerMovement(moves),
       ...getTwoFingerMovement(moves),
       pinch: getPinch(moves, pinchThreshold)
     };

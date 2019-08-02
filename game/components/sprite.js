@@ -15,7 +15,9 @@ export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns,
 	sprite.position.y = y;
 	sprite.position.z = z;
 
-	if (parent) 
+	if (parent && parent.model)
+		parent.model.add(sprite);
+	else if (parent)
 		parent.add(sprite);
 
 	const actions = {};
