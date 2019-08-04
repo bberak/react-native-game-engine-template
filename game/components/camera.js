@@ -2,7 +2,7 @@ import { PerspectiveCamera } from "three";
 import { screen, remap } from "../utils";
 import { noise } from "../utils/perlin";
 
-export default (Camera = () => {
+export default () => {
 	const camera = new PerspectiveCamera(
 		90,
 		screen.width / screen.height,
@@ -39,4 +39,4 @@ export default (Camera = () => {
 	};
 
 	return camera;
-});
+};

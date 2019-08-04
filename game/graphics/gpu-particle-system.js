@@ -144,8 +144,6 @@ const GPUParticleSystem = function(options) {
 		return ++i >= this.rand.length ? this.rand[(i = 1)] : this.rand[i];
 	};
 
-	var textureLoader = new THREE.TextureLoader();
-
 	this.particleNoiseTex = this.PARTICLE_NOISE_TEXTURE;
 	this.particleNoiseTex.wrapS = this.particleNoiseTex.wrapT = THREE.RepeatWrapping;
 

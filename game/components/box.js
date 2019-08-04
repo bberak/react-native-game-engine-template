@@ -1,7 +1,17 @@
 import * as THREE from "three";
 import { add } from "../utils/three";
 
-export default Box = ({ parent, x = 0, y = 0, z = 0, width = 1.1, breadth = 1.1, height = 1.1, scale = 1, color = 0x0000ff }) => {
+export default ({
+	parent,
+	x = 0,
+	y = 0,
+	z = 0,
+	width = 1.1,
+	breadth = 1.1,
+	height = 1.1,
+	scale = 1,
+	color = 0x0000ff
+}) => {
 	const geometry = new THREE.BoxGeometry(width, height, breadth);
 	const material = new THREE.MeshStandardMaterial({ color });
 	const cube = new THREE.Mesh(geometry, material);

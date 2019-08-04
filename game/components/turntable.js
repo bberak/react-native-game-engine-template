@@ -1,7 +1,7 @@
 import * as THREE from "three";
-import { add } from "../utils/three";
+import { add, rotateAroundPoint } from "../utils/three";
 
-export default Turntable = ({ parent, x = 0, y = 0, z = 0, width = 1.1, radius = 4, height = 0.2, color = 0xdddddd, segments = 32, opacity = 1 }) => {
+export default Turntable = ({ parent, items = [], x = 0, y = 0, z = 0, width = 1.1, radius = 4, height = 0.2, color = 0xdddddd, segments = 32, opacity = 1 }) => {
 
 	const geometry = new THREE.CylinderGeometry(radius, radius + radius * 0.1, height, segments);
 	const material = new THREE.MeshStandardMaterial({ color, transparent: opacity < 1, opacity, flatShading: true });
@@ -10,6 +10,12 @@ export default Turntable = ({ parent, x = 0, y = 0, z = 0, width = 1.1, radius =
 	cylinder.position.x = x;
 	cylinder.position.y = y;
 	cylinder.position.z = z;
+
+	items.forEach((i, idx) => {
+		i.model.position.z = radius - 1;
+		rotateAroundPoint(i.model, cylinder.position, { thetaY: ((Math.PI * 2) / items.length) * idx })
+		add(cylinder, i);
+	})
 	
 	add(parent, cylinder);
 
