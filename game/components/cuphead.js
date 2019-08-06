@@ -1,62 +1,15 @@
 import { Vector3, Euler, Group } from "three";
 import ExpoTHREE from "expo-three";
 import Sprite from "./sprite";
-import Particles from "./particles";
 import { add } from "../utils/three";
 
 const spriteSheet = ExpoTHREE.loadAsync(
 	require("../../assets/spritesheets/cuphead.png")
 );
 
-const particleTexture = ExpoTHREE.loadAsync(
-	require("../../assets/textures/particle.png")
-);
-
 export default async ({ parent, x = 0, y = 0, z = 0}) => {
 	
 	const group = new Group();
-
-	const shoot = await Particles({
-		parent: group,
-		particleTexture,
-		maxParticles: 250,
-		options: {
-			position: new Vector3(),
-			positionRandomness: 0,
-			velocity: new Vector3(0, 1, 0),
-			velocityRandomness: 0,
-			color: 0xffffff,
-			colorRandomness: 0,
-			turbulence: 0.1,
-			lifetime: 1,
-			size: 25,
-			sizeRandomness: 1,
-			rotation: new Euler()
-		},
-		spawnOptions: {
-			spawnRate: 0,
-			timeScale: 1
-		},
-		beforeSpawn(self, entities, { options, spawnOptions }, { stickController }) {
-			options.rotation.set(0, 0, -stickController.heading);
-			options.velocity.set(1, 0, 0);
-			options.velocity.applyEuler(options.rotation);
-
-			options.position.x = 1;
-			options.position.y = 1;
-			options.position.z = 1;
-
-			if (stickController.a) {
-				spawnOptions.spawnRate =  40;
-				options.color = 0xffffff;
-			} else if (stickController.b) {
-				spawnOptions.spawnRate =  40;
-				options.color = 0xff0000;
-			} else {
-				spawnOptions.spawnRate = 0;
-			}
-		}
-	});
 
 	const sprite = await Sprite({
 		parent: group,
@@ -67,20 +20,71 @@ export default async ({ parent, x = 0, y = 0, z = 0}) => {
 		columns: 16,
 		rows: 8,
 		actions: {
-			joy: {
-				start: { column: 0, row: 0 },
-				end: { column: 9, row: 0 },
+			sad: {
+				start: { row: 2, column: 0 },
+				end: { row: 2, column: 8 },
 				speed: 0.3
 			},
-			walk: {
-				start: { column: 0, row: 1 },
-				end: { column: 12, row: 1 },
+			joy: {
+				start: { row: 0,  column: 0 },
+				end: { row: 0, column: 9 },
 				speed: 0.3
+			},
+			walkSouth: {
+				start: { row: 1, column: 0 },
+				end: { row: 1, column: 12 },
+				speed: 0.3
+			},
+			walkSouthEast: {
+				start: { row: 3, column: 0 },
+				end: { row: 3, column: 15 },
+				speed: 0.3
+			},
+			walkEast: {
+				start: { row: 4, column: 0 },
+				end: { row: 4, column: 13 },
+				speed: 0.3
+			},
+			walkNorthEast: {
+				start: { row: 6, column: 0 },
+				end: { row: 6, column: 14 },
+				speed: 0.3
+			},
+			walkNorth: {
+				start: { row: 7, column: 1 },
+				end: { row: 7, column: 15 },
+				speed: 0.3
+			},
+			walkNorthWest: {
+				start: { row: 6, column: 1 },
+				end: { row: 6, column: 15 },
+				speed: 0.3,
+				flipX: true
 			}
 		}
 	});
 
+	sprite.timelines.actionCycle = {
+		while: true,
+		index: -1,
+		update(self, entities, cycle, { stickController }) {
+			const test = cycle.index;
+
+			if (stickController.a && !stickController.previous.a)
+				cycle.index--;
+			else if (stickController.b && !stickController.previous.b)
+				cycle.index++;
+
+			if (test != cycle.index) {
+				const keys = Object.keys(self.actions);
+				const key = keys[Math.abs(cycle.index) % keys.length];
+
+				self.actions[key]()
+			}
+		}
+	};
+
 	add(parent, group);
 
-	return { ...sprite, ...{ particles: { shoot }}, ...{ model: group }};
+	return { ...sprite, ...{ model: group }};
 };
