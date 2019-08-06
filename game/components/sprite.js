@@ -1,6 +1,5 @@
-import * as THREE from "three";
-import { cloneTexture } from "../utils/three";
-import { add } from "../utils/three";
+import { THREE } from "expo-three";
+import { cloneTexture, add } from "../utils/three";
 
 export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns, actions: mappings = {} }) => {
 
