@@ -37,7 +37,7 @@ export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns,
 				update(entity, entities, timeline, args) {
 					
 					//-- Can this be simplified?
-					//-- const column = step(remap(timline.index % 1, 0, 1, start.column, end.column), Math.abs(texture.repeat.x))
+					//-- const column = Math.trunc(remap(repeat ? timline.index % 1 : clamp(timeline.index), 0, 1, start.column, end.column))
 
 					const column = Math.trunc(repeat ? timeline.index % (end.column - start.column + 1) + start.column : Math.min(timeline.index + start.column, end.column));
 					const row = Math.trunc(repeat ? timeline.index % (end.row - start.row + 1) + start.row : Math.min(timeline.index + start.row, end.row));
