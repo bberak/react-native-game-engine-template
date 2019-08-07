@@ -1,7 +1,8 @@
-import { Vector3, Euler, Group } from "three";
+import { Vector3, Euler, Group, Math as Math3 } from "three";
 import ExpoTHREE from "expo-three";
 import Sprite from "./sprite";
 import { add } from "../utils/three";
+import { between } from "../utils";
 
 const spriteSheet = ExpoTHREE.loadAsync(
 	require("../../assets/spritesheets/cuphead.png")
@@ -20,74 +21,74 @@ export default async ({ parent, x = 0, y = 0, z = 0}) => {
 		columns: 16,
 		rows: 8,
 		actions: {
-			sad: {
+			idle: {
 				start: { row: 2, column: 0 },
-				end: { row: 2, column: 8 }
+				end: { row: 2, column: 8 },
+				speed: 0.125
 			},
 			joy: {
 				start: { row: 0,  column: 0 },
-				end: { row: 0, column: 11 },
+				end: { row: 0, column: 9 },
 				loop: false
 			},
-			walkSouth: {
+			s: {
 				start: { row: 1, column: 0 },
 				end: { row: 1, column: 12 }
 			},
-			walkSouthEast: {
+			se: {
 				start: { row: 3, column: 0 },
 				end: { row: 3, column: 15 }
 			},
-			walkEast: {
+			e: {
 				start: { row: 4, column: 0 },
 				end: { row: 4, column: 13 }
 			},
-			walkNorthEast: {
+			ne: {
 				start: { row: 6, column: 0 },
 				end: { row: 6, column: 14 }
 			},
-			walkNorth: {
+			n: {
 				start: { row: 7, column: 1 },
 				end: { row: 7, column: 15 }
 			},
-			walkNorthWest: {
+			nw: {
 				start: { row: 6, column: 0 },
 				end: { row: 6, column: 14 },
 				flipX: true
 			},
-			walkWest: {
+			w: {
 				start: { row: 4, column: 0 },
 				end: { row: 4, column: 13 },
 				flipX: true
 			},
-			walkSouthWest: {
+			sw: {
 				start: { row: 3, column: 0 },
 				end: { row: 3, column: 15 },
 				flipX: true
-			},
-			walkSouthAgain: {
-				start: { row: 1, column: 0 },
-				end: { row: 1, column: 12 }
 			}
 		}
 	});
 
-	sprite.timelines.actionCycle = {
+	sprite.timelines.controls = {
 		while: true,
-		index: -1,
-		update(self, entities, cycle, { stickController }) {
-			const test = cycle.index;
+		directions: [
+			{ heading: 0, action: "e" },
+			{ heading: -45, action: "ne" },
+			{ heading: -90, action: "n" },
+			{ heading: -135, action: "nw" },
+			{ heading: -180, action: "w" },
+			{ heading: 45, action: "se" },
+			{ heading: 90, action: "s" },
+			{ heading: 135, action: "sw" },
+			{ heading: 180, action: "w" }
+		],
+		update(self, entities, { directions }, { stickController }) {
+			if (stickController.heading) {
+				const degrees = Math3.radToDeg(stickController.heading)
+				const direction = directions.find(x => between(degrees, x.heading - 25, x.heading + 25))
 
-			if (stickController.a && !stickController.previous.a)
-				cycle.index--;
-			else if (stickController.b && !stickController.previous.b)
-				cycle.index++;
-
-			if (test != cycle.index) {
-				const keys = Object.keys(self.actions);
-				const key = keys[Math.abs(cycle.index) % keys.length];
-
-				self.actions[key]()
-			}
+				self.actions[direction.action]()
+			} else self.actions.idle();
 		}
 	};
 

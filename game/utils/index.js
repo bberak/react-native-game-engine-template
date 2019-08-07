@@ -110,6 +110,10 @@ const constrain = (n, low, high) => {
   return Math.max(Math.min(n, high), low);
 }
 
+const between = (n, low, high) => {
+  return n > low && n < high
+}
+
 const pipe = (...funcs) => _.flow(_.flatten(funcs || []))
 
 const id = (seed = 0) => (prefix = "") => `${prefix}${++seed}`
@@ -158,6 +162,7 @@ module.exports = {
 	remap,
 	constrain,
 	clamp: constrain,
+	between,
 	pipe,
 	id,
 	cond,

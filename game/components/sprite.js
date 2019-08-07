@@ -23,6 +23,10 @@ export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns,
 
 	Object.keys(mappings).forEach(key => {
 		actions[key] = () => {
+
+			if (timelines.action && timelines.action.key === key)
+				return;
+
 			let { start, end, loop = true, speed = 0.25, update, scaleX = 1, scaleY = 1, flipX = false, flipY = false } = mappings[key];
 			end = end || start;
 
@@ -57,6 +61,7 @@ export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns,
 			timelines.action = {
 				while: true,
 				counter: 0,
+				key,
 				update(entity, entities, timeline, args) {
 					const percentage = loop ? timeline.counter % 1 : clamp(timeline.counter, 0, 1)
 					const column = Math.trunc(remap(percentage, 0, 1, startColumn, endColumn))

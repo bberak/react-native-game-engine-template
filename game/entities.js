@@ -25,28 +25,18 @@ export default async () => {
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 	const box = Box({ y: 1 });
-	const box2 = Box({ y: 1 });
 	const portal = await Portal({ y: 1 });
-	const portal2 = await Portal({ y: 1, color: 0x00ff00 });
-	const portal3 = await Portal({ y: 1, color: 0x00ffff });
-	const portal4 = await Portal({ y: 1, color: 0xff00ff });
 	const cuphead = await Cuphead({ y: 1 });
-	const cuphead2 = await Cuphead({ y: 1 });
 	
-	const turntable = Turntable({ parent: scene, items: [box, box2, portal, portal2, portal3, portal4, cuphead, cuphead2] });	
+	const turntable = Turntable({ parent: scene, items: [box, portal, cuphead] });	
 	const hud = HUD();
 
 	const entities = {
 		scene,
 		camera,
 		box,
-		box2,
 		portal,
-		portal2,
-		portal3,
-		portal4,
 		cuphead,
-		cuphead2,
 		turntable,
 		hud
 	}
