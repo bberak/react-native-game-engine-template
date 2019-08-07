@@ -25,7 +25,7 @@ export default Turntable = ({ parent, items = [], x = 0, y = 0, z = 0, width = 1
 			swipe: {
 				while: true,
 				update(self, entities, timeline, { swipeController, stickController, touches }) {
-					if (stickController.heading || stickController.a || stickController.b)
+					if (stickController.heading !== null || stickController.a || stickController.b)
 						return;
 
 					if (swipeController.oneFingerX) {

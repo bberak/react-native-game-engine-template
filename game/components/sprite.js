@@ -51,7 +51,7 @@ export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns,
 				endRow++;
 			}
 
-			const increment = speed * 1 / Math.max(Math.abs(endColumn - startColumn), Math.abs(endRow - startRow))
+			const increment = speed * 1 / Math.max(Math.abs(endColumn - startColumn), Math.abs(endRow - startRow), 1)
 
 			if (loop) {
 				endColumn++;

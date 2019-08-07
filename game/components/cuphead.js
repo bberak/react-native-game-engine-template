@@ -22,11 +22,9 @@ export default async ({ parent, x = 0, y = 0, z = 0}) => {
 		rows: 8,
 		actions: {
 			idle: {
-				start: { row: 2, column: 0 },
-				end: { row: 2, column: 8 },
-				speed: 0.125
+				start: { row: 2, column: 0 }
 			},
-			joy: {
+			jump: {
 				start: { row: 0,  column: 0 },
 				end: { row: 0, column: 9 },
 				loop: false
@@ -83,7 +81,7 @@ export default async ({ parent, x = 0, y = 0, z = 0}) => {
 			{ heading: 180, action: "w" }
 		],
 		update(self, entities, { directions }, { stickController }) {
-			if (stickController.heading) {
+			if (stickController.heading !== null ) {
 				const degrees = Math3.radToDeg(stickController.heading)
 				const direction = directions.find(x => between(degrees, x.heading - 25, x.heading + 25))
 

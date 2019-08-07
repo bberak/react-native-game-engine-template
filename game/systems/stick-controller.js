@@ -84,7 +84,7 @@ const isTouchingPosition = (pos, proxmity) => {
   };
 };
 
-const neutral = { x: 0, y: 0, heading: undefined };
+const neutral = { x: 0, y: 0, heading: null };
 
 const trackNormalFromPosition = (pos, radius, proxmity) => {
   let normal = null;
