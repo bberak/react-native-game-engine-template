@@ -1,5 +1,6 @@
 import { THREE } from "expo-three";
 import { cloneTexture, add } from "../utils/three";
+import { remap, clamp } from "../utils";
 
 export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns, actions: mappings = {} }) => {
 
@@ -22,7 +23,7 @@ export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns,
 
 	Object.keys(mappings).forEach(key => {
 		actions[key] = () => {
-			let { start, end, repeat = true, speed = 1, update, scaleX = 1, scaleY = 1, flipX = false, flipY = false } = mappings[key];
+			let { start, end, repeat = true, speed = 0.25, update, scaleX = 1, scaleY = 1, flipX = false, flipY = false } = mappings[key];
 			end = end || start;
 
 			sprite.scale.x = scaleX;
@@ -31,20 +32,34 @@ export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns,
 			texture.repeat.x = Math.abs(texture.repeat.x) * (flipX ? -1 : 1);
 			texture.repeat.y = Math.abs(texture.repeat.y) * (flipY ? -1 : 1);
 
+			if (flipX) {
+				start.column++;
+				end.column++;
+			}
+
+			if (flipY) {
+				start.row++;
+				end.row++;
+			}
+
+			if (repeat) {
+				end.column++;
+				end.row++;
+			}
+
+			const increment = speed * 1 / Math.max(Math.abs(end.row - start.row), Math.abs(end.column - start.column))
+
 			timelines.action = {
 				while: true,
-				index: 0,
+				counter: 0,
 				update(entity, entities, timeline, args) {
-					
-					//-- Can this be simplified?
-					//-- const column = Math.trunc(remap(repeat ? timline.index % 1 : clamp(timeline.index), 0, 1, start.column, end.column))
+					const percentage = repeat ? timeline.counter % 1 : clamp(timeline.counter, 0, 1)
+					const column = Math.trunc(remap(percentage, 0, 1, start.column, end.column))
+					const row = Math.trunc(remap(percentage, 0, 1, start.row, end.row))
 
-					const column = Math.trunc(repeat ? timeline.index % (end.column - start.column + 1) + start.column : Math.min(timeline.index + start.column, end.column));
-					const row = Math.trunc(repeat ? timeline.index % (end.row - start.row + 1) + start.row : Math.min(timeline.index + start.row, end.row));
-					
 					texture.offset.x = column / columns;
 					texture.offset.y = row / rows;
-					timeline.index += speed;
+					timeline.counter += increment;
 
 					if (update)
 						update(entity, entities, { column, row }, args)

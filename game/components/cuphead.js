@@ -22,44 +22,50 @@ export default async ({ parent, x = 0, y = 0, z = 0}) => {
 		actions: {
 			sad: {
 				start: { row: 2, column: 0 },
-				end: { row: 2, column: 8 },
-				speed: 0.3
+				end: { row: 2, column: 8 }
 			},
 			joy: {
 				start: { row: 0,  column: 0 },
-				end: { row: 0, column: 9 },
-				speed: 0.3
+				end: { row: 0, column: 9 }
 			},
 			walkSouth: {
 				start: { row: 1, column: 0 },
-				end: { row: 1, column: 12 },
-				speed: 0.3
+				end: { row: 1, column: 12 }
 			},
 			walkSouthEast: {
 				start: { row: 3, column: 0 },
-				end: { row: 3, column: 15 },
-				speed: 0.3
+				end: { row: 3, column: 15 }
 			},
 			walkEast: {
 				start: { row: 4, column: 0 },
-				end: { row: 4, column: 13 },
-				speed: 0.3
+				end: { row: 4, column: 13 }
 			},
 			walkNorthEast: {
 				start: { row: 6, column: 0 },
-				end: { row: 6, column: 14 },
-				speed: 0.3
+				end: { row: 6, column: 14 }
 			},
 			walkNorth: {
 				start: { row: 7, column: 1 },
-				end: { row: 7, column: 15 },
-				speed: 0.3
+				end: { row: 7, column: 15 }
 			},
 			walkNorthWest: {
-				start: { row: 6, column: 1 },
-				end: { row: 6, column: 15 },
-				speed: 0.3,
+				start: { row: 6, column: 0 },
+				end: { row: 6, column: 14 },
 				flipX: true
+			},
+			walkWest: {
+				start: { row: 4, column: 0 },
+				end: { row: 4, column: 13 },
+				flipX: true
+			},
+			walkSouthWest: {
+				start: { row: 3, column: 0 },
+				end: { row: 3, column: 15 },
+				flipX: true
+			},
+			walkSouthAgain: {
+				start: { row: 1, column: 0 },
+				end: { row: 1, column: 12 }
 			}
 		}
 	});
