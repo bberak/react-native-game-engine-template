@@ -23,7 +23,7 @@ export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns,
 
 	Object.keys(mappings).forEach(key => {
 		actions[key] = () => {
-			let { start, end, repeat = true, speed = 0.25, update, scaleX = 1, scaleY = 1, flipX = false, flipY = false } = mappings[key];
+			let { start, end, loop = true, speed = 0.25, update, scaleX = 1, scaleY = 1, flipX = false, flipY = false } = mappings[key];
 			end = end || start;
 
 			sprite.scale.x = scaleX;
@@ -32,30 +32,35 @@ export default async ({ parent, x = 0, z = 0, y = 0, spriteSheet, rows, columns,
 			texture.repeat.x = Math.abs(texture.repeat.x) * (flipX ? -1 : 1);
 			texture.repeat.y = Math.abs(texture.repeat.y) * (flipY ? -1 : 1);
 
+			let startColumn = start.column;
+			let startRow = start.row;
+			let endColumn = end.column;
+			let endRow = end.row;
+
 			if (flipX) {
-				start.column++;
-				end.column++;
+				startColumn++;
+				endColumn++;
 			}
 
 			if (flipY) {
-				start.row++;
-				end.row++;
+				startRow++;
+				endRow++;
 			}
 
-			if (repeat) {
-				end.column++;
-				end.row++;
-			}
+			const increment = speed * 1 / Math.max(Math.abs(endColumn - startColumn), Math.abs(endRow - startRow))
 
-			const increment = speed * 1 / Math.max(Math.abs(end.row - start.row), Math.abs(end.column - start.column))
+			if (loop) {
+				endColumn++;
+				endRow++;
+			}
 
 			timelines.action = {
 				while: true,
 				counter: 0,
 				update(entity, entities, timeline, args) {
-					const percentage = repeat ? timeline.counter % 1 : clamp(timeline.counter, 0, 1)
-					const column = Math.trunc(remap(percentage, 0, 1, start.column, end.column))
-					const row = Math.trunc(remap(percentage, 0, 1, start.row, end.row))
+					const percentage = loop ? timeline.counter % 1 : clamp(timeline.counter, 0, 1)
+					const column = Math.trunc(remap(percentage, 0, 1, startColumn, endColumn))
+					const row = Math.trunc(remap(percentage, 0, 1, startRow, endRow))
 
 					texture.offset.x = column / columns;
 					texture.offset.y = row / rows;

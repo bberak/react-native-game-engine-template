@@ -10,7 +10,7 @@ import SwipeController from "./swipe-controller";
 export default [
 	StickController(),
 	SwipeController()(),
-	Camera({ pitchSpeed: -0.01 }),
+	Camera({ pitchSpeed: -0.01, yawSpeed: 0 }),
 	Particles,
 	Removal,
 	Rotation,

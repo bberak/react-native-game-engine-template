@@ -26,7 +26,8 @@ export default async ({ parent, x = 0, y = 0, z = 0}) => {
 			},
 			joy: {
 				start: { row: 0,  column: 0 },
-				end: { row: 0, column: 9 }
+				end: { row: 0, column: 11 },
+				loop: false
 			},
 			walkSouth: {
 				start: { row: 1, column: 0 },
