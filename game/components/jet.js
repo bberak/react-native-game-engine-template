@@ -1,5 +1,4 @@
-import { THREE } from 'expo-three';
-import ExpoTHREE from "expo-three";
+import ExpoTHREE, { THREE } from "expo-three";
 import Model from "./model";
 import { add } from "../utils/three";
 

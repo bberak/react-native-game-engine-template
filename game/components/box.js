@@ -19,8 +19,6 @@ export default ({
 	cube.translateX(x);
 	cube.translateY(y);
 	cube.translateZ(z);
-	cube.castShadow = true;
-	cube.receiveShadow = true;
 	cube.scale.x = scale;
 	cube.scale.y = scale;
 	cube.scale.z = scale;

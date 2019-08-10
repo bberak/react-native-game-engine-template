@@ -48,6 +48,10 @@ export const rotateAroundPoint = (
 	obj.position.add(diff);
 };
 
+export const model = obj => {
+	return obj.model ? obj.model : obj;
+};
+
 export const add = (parent, child) => {
 	if (!parent || !child)
 		return;
@@ -55,7 +59,7 @@ export const add = (parent, child) => {
 	const p = parent.model ? parent.model : parent;
 	const c = child.model ? child.model : child;
 
-	p.add(c);
+	model(p).add(model(c))
 };
 
 export const reparent = (subject, newParent) => {

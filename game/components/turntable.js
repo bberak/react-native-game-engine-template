@@ -1,5 +1,5 @@
 import { THREE } from 'expo-three';
-import { add, rotateAroundPoint } from "../utils/three";
+import { model, add, rotateAroundPoint } from "../utils/three";
 
 export default Turntable = ({ parent, items = [], x = 0, y = 0, z = 0, width = 1.1, radius = 4, height = 0.2, color = 0xdddddd, segments = 32, opacity = 1 }) => {
 
@@ -11,9 +11,9 @@ export default Turntable = ({ parent, items = [], x = 0, y = 0, z = 0, width = 1
 	cylinder.position.y = y;
 	cylinder.position.z = z;
 
-	items.forEach((i, idx) => {
-		i.model.position.z = radius - 1;
-		rotateAroundPoint(i.model, cylinder.position, { thetaY: ((Math.PI * 2) / items.length) * idx })
+	items.map(model).forEach((i, idx) => {
+		i.position.z = radius - 1;
+		rotateAroundPoint(i, cylinder.position, { thetaY: ((Math.PI * 2) / items.length) * idx })
 		add(cylinder, i);
 	})
 	
