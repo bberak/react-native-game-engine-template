@@ -1,4 +1,4 @@
-import { Vector3, Euler, Group, Math as Math3 } from "three";
+import { THREE } from 'expo-three';
 import ExpoTHREE from "expo-three";
 import Sprite from "./sprite";
 import { add } from "../utils/three";
@@ -10,7 +10,7 @@ const spriteSheet = ExpoTHREE.loadAsync(
 
 export default async ({ parent, x = 0, y = 0, z = 0}) => {
 	
-	const group = new Group();
+	const group = new THREE.Group();
 
 	const sprite = await Sprite({
 		parent: group,
@@ -82,7 +82,7 @@ export default async ({ parent, x = 0, y = 0, z = 0}) => {
 		],
 		update(self, entities, { directions }, { stickController }) {
 			if (stickController.heading !== null ) {
-				const degrees = Math3.radToDeg(stickController.heading)
+				const degrees = THREE.Math.radToDeg(stickController.heading)
 				const direction = directions.find(x => between(degrees, x.heading - 25, x.heading + 25))
 
 				self.actions[direction.action]()

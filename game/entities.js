@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { THREE } from 'expo-three';
 import Box from "./components/box";
 import Camera from "./components/camera";
 import Cuphead from "./components/cuphead";

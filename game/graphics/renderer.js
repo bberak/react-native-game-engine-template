@@ -1,14 +1,12 @@
 import React, { PureComponent } from "react";
 import { Platform } from "react-native";
 import ExpoGraphics from "expo-graphics-rnge";
-import ExpoTHREE from "expo-three";
-import suppressExpoWarnings from "expo-three/build/suppressWarnings";
-import * as THREE from "three";
+import ExpoTHREE, { THREE } from "expo-three";
 import _ from "lodash";
-import { EffectComposer }  from "three/examples/jsm/postprocessing/EffectComposer";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
+import EffectComposer  from "./effect-composer";
+import RenderPass from "./passes/render-pass";
 
-suppressExpoWarnings();
+THREE.suppressExpoWarnings();
 
 class ThreeView extends PureComponent {
 
@@ -53,8 +51,8 @@ class ThreeView extends PureComponent {
         onContextCreate={this.onContextCreate}
         onResize={this.onResize}
         onShouldReloadContext={this.onShouldReloadContext}
-        shouldIgnoreSafeGaurds
-        isShadowsEnabled
+        shouldIgnoreSafeGaurds={true}
+        isShadowsEnabled={false}
       />
     );
   }

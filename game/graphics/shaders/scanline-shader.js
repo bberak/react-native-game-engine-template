@@ -1,10 +1,10 @@
-import { Vector4 } from 'three';
+import { THREE } from 'expo-three';
 
-const ScanlineShader = {
+THREE.ScanlineShader = {
 	uniforms: {
 		tDiffuse: { value: null },
 		thickness: { value: 5.0 },
-		color: { value: new Vector4(0, 0, 0, 1) }
+		color: { value: new THREE.Vector4(0, 0, 0, 1) }
 	},
 
 	vertexShader: `
@@ -28,5 +28,5 @@ const ScanlineShader = {
 	`
 };
 
-export { ScanlineShader };
+export default THREE.ScanlineShader;
 

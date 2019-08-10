@@ -1,4 +1,4 @@
-import { Vector3, Group } from "three";
+import { THREE } from 'expo-three';
 import ExpoTHREE from "expo-three";
 import Particles from "./particles";
 import { add } from "../utils/three";
@@ -18,16 +18,16 @@ export default async ({
 	horizontalSpeed = 0.3,
 	color = 0xff0000
 }) => {
-	const group = new Group();
+	const group = new THREE.Group();
 
 	const swirl = await Particles({
 		parent: group,
 		particleTexture,
 		maxParticles: 250,
 		options: {
-			position: new Vector3(x, y, z),
+			position: new THREE.Vector3(x, y, z),
 			positionRandomness: 0,
-			velocity: new Vector3(),
+			velocity: new THREE.Vector3(),
 			velocityRandomness: 0,
 			color,
 			colorRandomness: 0,

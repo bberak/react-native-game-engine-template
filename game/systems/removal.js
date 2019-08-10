@@ -1,11 +1,11 @@
 import { remove } from "../utils";
-import { Frustum, Matrix4 } from "three";
+import { THREE } from 'expo-three';
 import _ from "lodash";
 
 //-- https://gist.github.com/zentrope/5022d89cfa995ac71978
 
-const frustum = new Frustum();
-const cameraViewProjectionMatrix = new Matrix4();
+const frustum = new THREE.Frustum();
+const cameraViewProjectionMatrix = new THREE.Matrix4();
 
 const Removal = entities => {
   const camera = entities.camera;

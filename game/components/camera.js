@@ -1,9 +1,9 @@
-import { PerspectiveCamera } from "three";
+import { THREE } from 'expo-three';
 import { screen, remap } from "../utils";
 import { noise } from "../utils/perlin";
 
 export default () => {
-	const camera = new PerspectiveCamera(
+	const camera = new THREE.PerspectiveCamera(
 		90,
 		screen.width / screen.height,
 		1,

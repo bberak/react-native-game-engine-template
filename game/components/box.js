@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { THREE } from 'expo-three';
 import { add } from "../utils/three";
 
 export default ({

@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { THREE } from 'expo-three';
 import { add, rotateAroundPoint } from "../utils/three";
 
 export default Turntable = ({ parent, items = [], x = 0, y = 0, z = 0, width = 1.1, radius = 4, height = 0.2, color = 0xdddddd, segments = 32, opacity = 1 }) => {

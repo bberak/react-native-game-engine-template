@@ -1,4 +1,3 @@
-import { Vector2 } from "three";
 import { rotateAroundPoint } from "../utils/three";
 
 const Camera = ({
