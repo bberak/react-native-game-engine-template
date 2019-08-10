@@ -5,6 +5,7 @@ import Cuphead from "./components/cuphead";
 import Portal from "./components/portal";
 import HUD from "./components/hud";
 import Turntable from "./components/turntable";
+import Jet from "./components/jet";
 import { clean } from "./utils/three";
 
 const scene = new THREE.Scene();
@@ -27,8 +28,9 @@ export default async () => {
 	const box = Box({ y: 1 });
 	const portal = await Portal({ y: 1 });
 	const cuphead = await Cuphead({ y: 1 });
+	const jet = await Jet({ y: 1});
 	
-	const turntable = Turntable({ parent: scene, items: [box, portal, cuphead] });	
+	const turntable = Turntable({ parent: scene, items: [box, portal, cuphead, jet] });	
 	const hud = HUD();
 
 	const entities = {
@@ -37,6 +39,7 @@ export default async () => {
 		box,
 		portal,
 		cuphead,
+		jet,
 		turntable,
 		hud
 	}

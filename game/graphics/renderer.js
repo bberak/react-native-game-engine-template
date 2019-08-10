@@ -6,6 +6,8 @@ import _ from "lodash";
 import EffectComposer  from "./effect-composer";
 import RenderPass from "./passes/render-pass";
 
+global.THREE = THREE;
+
 THREE.suppressExpoWarnings();
 
 class ThreeView extends PureComponent {

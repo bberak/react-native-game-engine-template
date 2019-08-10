@@ -10,7 +10,7 @@
     "@popmotion/popcorn": "^0.4.0",
     "expo": "^33.0.0",
     "expo-graphics-rnge": "^1.2.0",
-    "expo-three": "^3.0.2-alpha.1",
+    "expo-three": "^4.0.3",
     "lodash": "^4.17.11",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
