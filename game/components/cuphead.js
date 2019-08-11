@@ -3,7 +3,7 @@ import Sprite from "./sprite";
 import { between } from "../utils";
 
 const spriteSheet = ExpoTHREE.loadAsync(
-	require("../../assets/spritesheets/cuphead.png")
+	require("../../assets/sprite-sheets/cuphead.png")
 );
 
 export default async ({ parent, x = 0, y = 0, z = 0}) => {

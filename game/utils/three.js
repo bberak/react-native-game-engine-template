@@ -85,3 +85,17 @@ export const cloneTexture = texture => {
 
   	return clone;
 };
+
+export const firstMesh = obj => {
+	if (obj.isMesh)
+		return obj;
+
+	if (obj.children && obj.children.length){
+		for (let i = 0; i < obj.children.length; i++) {
+			const test = firstMesh(obj.children[i]);
+
+			if (test.isMesh)
+				return test;
+		}
+	}
+};
