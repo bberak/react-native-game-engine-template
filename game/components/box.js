@@ -14,19 +14,19 @@ export default ({
 }) => {
 	const geometry = new THREE.BoxGeometry(width, height, breadth);
 	const material = new THREE.MeshStandardMaterial({ color });
-	const cube = new THREE.Mesh(geometry, material);
+	const box = new THREE.Mesh(geometry, material);
 
-	cube.translateX(x);
-	cube.translateY(y);
-	cube.translateZ(z);
-	cube.scale.x = scale;
-	cube.scale.y = scale;
-	cube.scale.z = scale;
+	box.translateX(x);
+	box.translateY(y);
+	box.translateZ(z);
+	box.scale.x = scale;
+	box.scale.y = scale;
+	box.scale.z = scale;
 
-	add(parent, cube);
+	add(parent, box);
 
 	return {
-		model: cube,
+		model: box,
 		removable: false,
 		rotation: {
 			x: 0.01,
