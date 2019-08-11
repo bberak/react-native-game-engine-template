@@ -1,4 +1,4 @@
-import { THREE } from 'expo-three';
+import { THREE } from "expo-three";
 
 /**
  * @author alteredq / http://alteredqualia.com/
@@ -8,37 +8,32 @@ import { THREE } from 'expo-three';
  * https://github.com/evanw/glfx.js
  */
 
-THREE.SepiaShader = {
+export default (amount = 1.0) => {
+	const speiaShader = {
+		uniforms: {
+			tDiffuse: { value: null },
+			amount: { value: amount }
+		},
 
-	uniforms: {
+		vertexShader: [
+			"varying vec2 vUv;",
 
-		"tDiffuse": { value: null },
-		"amount":   { value: 1.0 }
-
-	},
-
-	vertexShader: [
-
-		"varying vec2 vUv;",
-
-		"void main() {",
+			"void main() {",
 
 			"vUv = uv;",
 			"gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
 
-		"}"
+			"}"
+		].join("\n"),
 
-	].join( "\n" ),
+		fragmentShader: [
+			"uniform float amount;",
 
-	fragmentShader: [
+			"uniform sampler2D tDiffuse;",
 
-		"uniform float amount;",
+			"varying vec2 vUv;",
 
-		"uniform sampler2D tDiffuse;",
-
-		"varying vec2 vUv;",
-
-		"void main() {",
+			"void main() {",
 
 			"vec4 color = texture2D( tDiffuse, vUv );",
 			"vec3 c = color.rgb;",
@@ -49,10 +44,9 @@ THREE.SepiaShader = {
 
 			"gl_FragColor = vec4( min( vec3( 1.0 ), color.rgb ), color.a );",
 
-		"}"
+			"}"
+		].join("\n")
+	};
 
-	].join( "\n" )
-
+	return speiaShader;
 };
-
-export default THREE.SepiaShader;

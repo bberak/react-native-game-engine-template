@@ -1,5 +1,5 @@
-import { THREE } from 'expo-three';
-import { screen } from '../../utils';
+import { THREE } from "expo-three";
+import { screen } from "../../utils";
 
 /**
  * @author wongbryan / http://wongbryan.github.io
@@ -7,46 +7,41 @@ import { screen } from '../../utils';
  * Pixelation shader
  */
 
-THREE.PixelShader = {
+export default (pixelSize = 4.0, resolution = new THREE.Vector2(screen.width, screen.height)) => {
+	const pixelShader = {
+		uniforms: {
+			tDiffuse: { value: null },
+			pixelSize: { value: pixelSize },
+			resolution: { value: resolution }
+		},
 
-	uniforms: {
+		vertexShader: [
+			"varying highp vec2 vUv;",
 
-		"tDiffuse": { value: null },
-		"resolution": { value: new THREE.Vector2(screen.width, screen.height) },
-		"pixelSize": { value: 4.0 },
+			"void main() {",
 
-	},
+			"vUv = uv;",
+			"gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
 
-	vertexShader: [
+			"}"
+		].join("\n"),
 
-		"varying highp vec2 vUv;",
+		fragmentShader: [
+			"uniform sampler2D tDiffuse;",
+			"uniform float pixelSize;",
+			"uniform vec2 resolution;",
 
-		"void main() {",
+			"varying highp vec2 vUv;",
 
-		"vUv = uv;",
-		"gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
+			"void main(){",
 
-		"}"
+			"vec2 dxy = pixelSize / resolution;",
+			"vec2 coord = dxy * floor( vUv / dxy );",
+			"gl_FragColor = texture2D(tDiffuse, coord);",
 
-	].join( "\n" ),
+			"}"
+		].join("\n")
+	};
 
-	fragmentShader: [
-
-		"uniform sampler2D tDiffuse;",
-		"uniform float pixelSize;",
-		"uniform vec2 resolution;",
-
-		"varying highp vec2 vUv;",
-
-		"void main(){",
-
-		"vec2 dxy = pixelSize / resolution;",
-		"vec2 coord = dxy * floor( vUv / dxy );",
-		"gl_FragColor = texture2D(tDiffuse, coord);",
-
-		"}"
-
-	].join( "\n" )
+	return pixelShader;
 };
-
-export default THREE.PixelShader;

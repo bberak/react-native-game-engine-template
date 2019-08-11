@@ -1,13 +1,14 @@
-import { THREE } from 'expo-three';
+import { THREE } from "expo-three";
 
-THREE.ScanlineShader = {
-	uniforms: {
-		tDiffuse: { value: null },
-		thickness: { value: 5.0 },
-		color: { value: new THREE.Vector4(0, 0, 0, 1) }
-	},
+export default (thickness = 5.0, color = new THREE.Vector4(0, 0, 0, 1)) => {
+	const scanlineShader = {
+		uniforms: {
+			tDiffuse: { value: null },
+			thickness: { value: thickness },
+			color: { value: color }
+		},
 
-	vertexShader: `
+		vertexShader: `
 		varying vec2 vUv;
 		void main() {
 			vUv = uv;
@@ -15,7 +16,7 @@ THREE.ScanlineShader = {
 		}
 	`,
 
-	fragmentShader: `
+		fragmentShader: `
 		const vec4 blank = vec4(0.0, 0.0, 0.0, 1.0);
 		uniform sampler2D tDiffuse;
 		uniform float thickness;
@@ -26,7 +27,7 @@ THREE.ScanlineShader = {
 			gl_FragColor = result == 0.0 ? texture2D(tDiffuse, vUv) : color;
 		}
 	`
+	};
+
+	return scanlineShader;
 };
-
-export default THREE.ScanlineShader;
-
