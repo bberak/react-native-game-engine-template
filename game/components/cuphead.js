@@ -1,6 +1,5 @@
 import ExpoTHREE, { THREE } from "expo-three";
 import Sprite from "./sprite";
-import { add } from "../utils/three";
 import { between } from "../utils";
 
 const spriteSheet = ExpoTHREE.loadAsync(
@@ -9,10 +8,8 @@ const spriteSheet = ExpoTHREE.loadAsync(
 
 export default async ({ parent, x = 0, y = 0, z = 0}) => {
 	
-	const group = new THREE.Group();
-
 	const sprite = await Sprite({
-		parent: group,
+		parent,
 		x,
 		y,
 		z,
@@ -89,7 +86,5 @@ export default async ({ parent, x = 0, y = 0, z = 0}) => {
 		}
 	};
 
-	add(parent, group);
-
-	return { ...sprite, ...{ model: group }};
+	return sprite;
 };

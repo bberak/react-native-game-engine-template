@@ -1,6 +1,5 @@
 import ExpoTHREE, { THREE } from "expo-three";
 import Model from "./model";
-import { add } from "../utils/three";
 
 const mesh = ExpoTHREE.loadAsync(
 	require("../../assets/models/jet.glb")
@@ -8,17 +7,13 @@ const mesh = ExpoTHREE.loadAsync(
 
 export default async ({ parent, x = 0, y = 0, z = 0}) => {
 	
-	const group = new THREE.Group();
-
 	const model = await Model({
-		parent: group,
+		parent,
 		x,
 		y,
 		z,
 		mesh
 	});
 
-	add(parent, group);
-
-	return { ...model, ...{ model: group }};
+	return model;
 };

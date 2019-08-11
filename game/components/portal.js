@@ -1,6 +1,5 @@
 import ExpoTHREE, { THREE } from "expo-three";
 import Particles from "./particles";
-import { add } from "../utils/three";
 
 const particleTexture = ExpoTHREE.loadAsync(
 	require("../../assets/textures/particle.png")
@@ -17,10 +16,9 @@ export default async ({
 	horizontalSpeed = 0.3,
 	color = 0xff0000
 }) => {
-	const group = new THREE.Group();
 
 	const swirl = await Particles({
-		parent: group,
+		parent,
 		particleTexture,
 		maxParticles: 250,
 		options: {
@@ -52,10 +50,8 @@ export default async ({
 		}
 	});
 
-	add(parent, group);
-
 	return {
-		model: group,
+		model: swirl.emitter,
 		particles: {
 			swirl
 		}
