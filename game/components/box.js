@@ -10,7 +10,7 @@ export default ({
 	breadth = 1.1,
 	height = 1.1,
 	scale = 1,
-	color = 0x0000ff
+	color = 0x00E6FF
 }) => {
 	const geometry = new THREE.BoxGeometry(width, height, breadth);
 	const material = new THREE.MeshStandardMaterial({ color });
