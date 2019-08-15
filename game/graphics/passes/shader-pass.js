@@ -1,4 +1,5 @@
 import { THREE } from 'expo-three';
+import Pass from "./pass";
 
 /**
  * @author alteredq / http://alteredqualia.com/
