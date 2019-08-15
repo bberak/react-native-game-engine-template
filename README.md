@@ -10,7 +10,7 @@ This project uses [Expo](https://expo.io) because quite frankly, it is the easie
 
 ## How to start
 
-Firstly, clone the repo and setup git:
+Firstly, clone the repo and configure git tracking:
 
 ```
 git clone https://github.com/bberak/react-native-game-engine-template.git
@@ -31,7 +31,7 @@ git push origin master
 
 ```
 
-Then install dependencies and start:
+Then, install the dependencies and start the app:
 
 ```
 npm install
