@@ -75,7 +75,7 @@ const ThreeJSRenderer = (...passes) => (state, screen) => {
   return [
     <ThreeView
       passes={_.flatten(passes)}
-      key={"threeView"}
+      key={"three-view"}
       scene={state.scene}
       camera={state.camera}
     />,

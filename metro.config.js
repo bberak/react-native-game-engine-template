@@ -4,7 +4,8 @@ module.exports = {
   resolver: {
     assetExts: [
       ...defaultAssetExts,
-      "glb"
+      "glb",
+      "fbx"
     ]
   }
 };

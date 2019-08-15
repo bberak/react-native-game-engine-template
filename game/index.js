@@ -17,8 +17,8 @@ class Game extends React.Component {
         systems={Systems}
         entities={Entities()}
         renderer={Renderer(
-          new ShaderPass(PixelShader()),
-          new ShaderPass(ScanlineShader())
+          //new ShaderPass(PixelShader()),
+          //new ShaderPass(ScanlineShader())
         )}
       />
     );
