@@ -14,7 +14,7 @@ export default async ({
 	radius = 0.5,
 	verticalSpeed = 0.01,
 	horizontalSpeed = 0.3,
-	color = 0xff0000
+	color = 0xffffff
 }) => {
 
 	const swirl = await Particles({
