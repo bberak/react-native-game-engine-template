@@ -6,13 +6,24 @@ import HUD from "./components/hud";
 import Turntable from "./components/turntable";
 import Droid from "./components/droid";
 import Portal from "./components/portal";
-import { clean } from "./utils/three";
+import { clear } from "./utils/three";
+import * as OIMO from "oimo";
 
 const scene = new THREE.Scene();
 const camera = Camera();
+const world = new OIMO.World({ 
+    timestep: 1 / 60, 
+    iterations: 8, 
+    broadphase: 2,
+    worldscale: 1,
+    random: true,
+    info: false,
+    gravity: [0, -9.8 ,0] 
+});
 
 export default async () => {
-	clean(scene);
+	clear(scene);
+	world.clear();
 
 	const ambient = new THREE.AmbientLight(0xffffff, 1);
 	const sunlight = new THREE.DirectionalLight(0xffffff, 0.95);
@@ -27,7 +38,7 @@ export default async () => {
 
 	const box = Box({ y: 1 });
 	const cuphead = await Cuphead({ y: 1 });
-	const droid = await Droid({ y: 1 });
+	const droid = await Droid({ world, y: 1 });
 	const portal = await Portal({ y: 1 });
 	
 	const turntable = Turntable({ parent: scene, items: [droid, box, cuphead, portal] });	
@@ -36,6 +47,7 @@ export default async () => {
 	const entities = {
 		scene,
 		camera,
+		world,
 		droid,
 		box,
 		cuphead,

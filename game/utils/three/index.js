@@ -12,6 +12,8 @@ export const clean = obj => {
 	if (obj.texture && obj.texture.dispose) obj.texture.dispose();
 };
 
+export const clear = clean;
+
 export const remove = (parent, child) => {
 	if (child)
 		clean(child);
