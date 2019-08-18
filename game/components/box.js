@@ -1,8 +1,10 @@
-import { THREE } from 'expo-three';
+import { THREE } from "expo-three";
 import { add } from "../utils/three";
 
 export default ({
 	parent,
+	world,
+	dynamic = true,
 	x = 0,
 	y = 0,
 	z = 0,
@@ -10,15 +12,15 @@ export default ({
 	breadth = 1.1,
 	height = 1.1,
 	scale = 1,
-	color = 0x00E6FF
+	color = 0x00e6ff
 }) => {
 	const geometry = new THREE.BoxGeometry(width, height, breadth);
 	const material = new THREE.MeshStandardMaterial({ color });
 	const box = new THREE.Mesh(geometry, material);
 
-	box.translateX(x);
-	box.translateY(y);
-	box.translateZ(z);
+	box.position.x = x;
+	box.position.y = y;
+	box.position.z = z;
 	box.scale.x = scale;
 	box.scale.y = scale;
 	box.scale.z = scale;
@@ -27,11 +29,20 @@ export default ({
 
 	return {
 		model: box,
-		removable: false,
-		rotation: {
-			x: 0.01,
-			y: 0.01,
-			z: 0.01
-		}
+		bodies: [
+			world.add({
+				type: "box",
+				size: [width * scale, height * scale, breadth * scale],
+				pos: [x, y, z],
+				rot: [0, 0, 0],
+				move: dynamic,
+				density: 0.1,
+				friction: 0.9,
+				restitution: 0.2,
+				belongsTo: 1,
+				collidesWith: 0xffffffff
+			})
+		],
+		removable: (frustum, self) => !frustum.intersectsObject(self.model)
 	};
 };

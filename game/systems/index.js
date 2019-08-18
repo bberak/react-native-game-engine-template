@@ -7,6 +7,7 @@ import HUD from "./hud";
 import StickController from "./stick-controller";
 import SwipeController from "./swipe-controller";
 import Physics from "./physics";
+import Spawn from "./spawn";
 
 export default [
 	StickController(),
@@ -16,6 +17,7 @@ export default [
 	Removal,
 	Rotation,
 	Timeline,
+	Spawn,
 	Physics,
 	HUD
 ];

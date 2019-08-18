@@ -26,6 +26,9 @@ const remove = (entities, key) => {
 		})
 	}
 
+	if (entity.bodies)
+		entity.bodies.forEach(b => b.remove())
+
 	delete entities[key];
 
 	return entities;

@@ -1,5 +1,4 @@
 import { THREE } from 'expo-three';
-import Box from "./components/box";
 import Camera from "./components/camera";
 import Cuphead from "./components/cuphead";
 import HUD from "./components/hud";
@@ -36,12 +35,11 @@ export default async () => {
 	camera.position.set(0, 2, 6);
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-	const box = Box({ y: 1 });
 	const cuphead = await Cuphead({ y: 1 });
-	const droid = await Droid({ world, y: 1 });
+	const droid = await Droid({ y: 1 });
 	const portal = await Portal({ y: 1 });
 	
-	const turntable = Turntable({ parent: scene, items: [droid, box, cuphead, portal] });	
+	const turntable = Turntable({ parent: scene, world, items: [droid, cuphead, portal] });	
 	const hud = HUD();
 
 	const entities = {
@@ -49,7 +47,6 @@ export default async () => {
 		camera,
 		world,
 		droid,
-		box,
 		cuphead,
 		portal,
 		turntable,

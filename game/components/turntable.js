@@ -1,7 +1,7 @@
 import { THREE } from 'expo-three';
 import { add, rotateAroundPoint } from "../utils/three";
 
-export default Turntable = ({ parent, items = [], x = 0, y = 0, z = 0, width = 1.1, radius = 4, height = 0.2, color = 0xdddddd, segments = 32, opacity = 1 }) => {
+export default Turntable = ({ parent, world, items = [], x = 0, y = 0, z = 0, radius = 4, height = 0.2, color = 0xdddddd, segments = 32, opacity = 1 }) => {
 
 	const geometry = new THREE.CylinderGeometry(radius, radius + radius * 0.1, height, segments);
 	const material = new THREE.MeshStandardMaterial({ color, transparent: opacity < 1, opacity, flatShading: true });
@@ -16,14 +16,40 @@ export default Turntable = ({ parent, items = [], x = 0, y = 0, z = 0, width = 1
 		rotateAroundPoint(item.model, cylinder.position, { thetaY: ((Math.PI * 2) / items.length) * idx })
 		add(cylinder, item);
 
-		if (item.body)
-			item.body.position.set(item.model.position.x, item.model.position.y, item.model.position.z)
+		if (item.bodies) 
+			item.bodies[0].position.set(item.model.position.x, item.model.position.y, item.model.position.z)
 	})
 	
 	add(parent, cylinder);
 
+	const primary = world.add({ 
+	    type: "cylinder",
+	    size: [radius, height],
+	    pos: [x, y, z],
+	    rot: [0, 0, 0],
+	    move: true,
+	    density: 0.9,
+	    friction: 0.9,
+	    restitution: 0.2,
+	    belongsTo: 1,
+	    collidesWith: 0xffffffff
+	});
+
+	const base = world.add({ type: "cylinder", size: [radius, height], pos: [x, y, z], move: false });
+
+	const hinge = world.add({
+		type: "jointHinge",
+		body1: primary, 
+		body2: base,
+		axe1: [0, 1, 0],
+		axe2: [0, 1, 0],
+		pos1: [primary.position.x, primary.position.y, primary.position.z],
+		pos2: [base.position.x, base.position.y, base.position.z]
+	});
+
 	return {
 		model: cylinder,
+		bodies: [primary, base, hinge],
 		timelines: {
 			swipe: {
 				while: true,
@@ -31,17 +57,10 @@ export default Turntable = ({ parent, items = [], x = 0, y = 0, z = 0, width = 1
 					if (stickController.heading !== null || stickController.a || stickController.b)
 						return;
 
-					if (swipeController.oneFingerX) {
-						self.timelines.turn = {
-							momentum: swipeController.oneFingerX,
-							while: (_1, _2, turn) => Math.abs(turn.momentum) > 0.02,
-							update: (_1, _2, turn) => {
-								self.model.rotation.y += 0.01 * turn.momentum
-								turn.momentum *= 0.95
-							}
-						}
-					} else if (touches.find(x => x.type == "start"))
-						delete self.timelines.turn;
+					if (swipeController.oneFingerX)
+						self.bodies[0].angularVelocity.set(0, swipeController.oneFingerX * 0.1, 0)
+					else if (touches.find(x => x.type == "start"))
+						self.bodies[0].angularVelocity.set(0, 0, 0)
 				}
 			}
 		}
