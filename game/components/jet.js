@@ -1,5 +1,5 @@
 import ExpoTHREE, { THREE } from "expo-three";
-import Mixer from "./mixer";
+import AnimatedModel from "./animated-model";
 import { firstMesh } from "../utils/three";
 import { between } from "../utils";
 
@@ -9,7 +9,7 @@ const mesh = ExpoTHREE.loadAsync(
 
 export default async ({ parent, x = 0, y = 0, z = 0}) => {
 
-	const mixer = await Mixer({
+	const animated = await AnimatedModel({
 		parent,
 		x,
 		y,
@@ -30,13 +30,13 @@ export default async ({ parent, x = 0, y = 0, z = 0}) => {
 	timelines.controls = {
 		while: true,
 		directions: [
-			{ heading: 0, track: "rudderRight" },
-			{ heading: -60, track: "leftFlapDown" },
-			{ heading: -120, track: "leftFlapUp" },
-			{ heading: -180, track: "rudderLeft" },
-			{ heading: 60, track: "rightFlapUp" },
-			{ heading: 120, track: "rightFlapDown" },
-			{ heading: 180, track: "rudderLeft" }
+			{ heading: 0, pose: "rudderRight" },
+			{ heading: -60, pose: "leftFlapDown" },
+			{ heading: -120, pose: "leftFlapUp" },
+			{ heading: -180, pose: "rudderLeft" },
+			{ heading: 60, pose: "rightFlapUp" },
+			{ heading: 120, pose: "rightFlapDown" },
+			{ heading: 180, pose: "rudderLeft" }
 		],
 		update(self, entities, { directions }, { stickController }) {
 			let target = null;
@@ -46,17 +46,17 @@ export default async ({ parent, x = 0, y = 0, z = 0}) => {
 				const direction = directions.find(x => between(degrees, x.heading - 30, x.heading + 30))
 
 				if (direction)
-					target = direction.track;
+					target = direction.pose;
 			}
 
 			directions.forEach(x => {
-				const track = self.tracks[x.track];
-				const val = track();
+				const pose = self.poses[x.pose];
+				const val = pose();
 
-				track(val + (x.track === target ? 0.01 : -0.01))
+				pose(val + (x.pose === target ? 0.01 : -0.01))
 			});
 		}
 	};
 
-	return { ...mixer, ...{ timelines }};
+	return { ...animated, ...{ timelines }};
 };

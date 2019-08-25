@@ -16,12 +16,12 @@ export default async ({ parent, x = 0, z = 0, y = 0, scale = 1, mesh, morphTarge
 
 	add(parent, model);
 
-	const tracks = {};
+	const poses = {};
 	
 	Object.keys(morphTargets).forEach(key => {
 		const index = morphTargets[key];
 
-		tracks[key] = weight => {
+		poses[key] = weight => {
 			if (weight === undefined || weight === null)
 				return model.morphTargetInfluences[index];
 
@@ -31,6 +31,6 @@ export default async ({ parent, x = 0, z = 0, y = 0, scale = 1, mesh, morphTarge
 
 	return {
 		model,
-		tracks
+		poses
 	};
 };

@@ -5,6 +5,7 @@ import HUD from "./components/hud";
 import Turntable from "./components/turntable";
 import Droid from "./components/droid";
 import Portal from "./components/portal";
+import Jet from "./components/jet";
 import { clear } from "./utils/three";
 import * as OIMO from "oimo";
 
@@ -38,8 +39,9 @@ export default async () => {
 	const cuphead = await Cuphead({ y: 1 });
 	const droid = await Droid({ y: 1 });
 	const portal = await Portal({ y: 1 });
+	const jet = await Jet({ y: 1 });
 	
-	const turntable = Turntable({ parent: scene, world, items: [droid, cuphead, portal] });	
+	const turntable = Turntable({ parent: scene, world, items: [droid, cuphead, portal, jet] });	
 	const hud = HUD();
 
 	const entities = {
@@ -49,6 +51,7 @@ export default async () => {
 		droid,
 		cuphead,
 		portal,
+		jet,
 		turntable,
 		hud
 	}
