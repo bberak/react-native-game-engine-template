@@ -15,9 +15,6 @@ const remove = (entities, key) => {
 	if (entity.light)
 		three.remove(entity.light.parent, entity.light);
 
-	if (entity.collisions && entity.collisions.hitBoxHelper)
-		three.remove(entity.collisions.hitBoxHelper.parent, entity.collisions.hitBoxHelper);
-
 	if (entity.particles) {
 		Object.keys(entity.particles).forEach(k => {
 			const emitter = entity.particles[k].emitter
