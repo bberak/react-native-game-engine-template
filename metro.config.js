@@ -5,7 +5,8 @@ module.exports = {
     assetExts: [
       ...defaultAssetExts,
       "glb",
-      "fbx"
+      "fbx",
+      "wav"
     ]
   }
 };

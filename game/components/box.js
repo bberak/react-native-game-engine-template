@@ -43,6 +43,10 @@ export default ({
 				collidesWith: 0xffffffff
 			})
 		],
+		collision: (self, other, contact) => {
+			if (!contact.close)
+				console.log(contact.close);
+		},
 		removable: (frustum, self) => !frustum.intersectsObject(self.model)
 	};
 };
