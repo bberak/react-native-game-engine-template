@@ -6,7 +6,8 @@ module.exports = {
       ...defaultAssetExts,
       "glb",
       "fbx",
-      "wav"
+      "wav",
+      "mp3"
     ]
   }
 };
