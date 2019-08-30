@@ -1,10 +1,9 @@
 import ExpoTHREE, { THREE } from "expo-three";
 import Sprite from "./sprite";
 import { between } from "../utils";
+import CupheadPNG from "../../assets/sprite-sheets/cuphead.png";
 
-const spriteSheet = ExpoTHREE.loadAsync(
-	require("../../assets/sprite-sheets/cuphead.png")
-);
+const spriteSheet = ExpoTHREE.loadAsync(CupheadPNG);
 
 export default async ({ parent, x = 0, y = 0, z = 0}) => {
 	
