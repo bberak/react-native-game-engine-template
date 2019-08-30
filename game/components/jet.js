@@ -2,10 +2,9 @@ import ExpoTHREE, { THREE } from "expo-three";
 import AnimatedModel from "./animated-model";
 import { firstMesh } from "../utils/three";
 import { between } from "../utils";
+import JetFile from "../../assets/models/jet.glb";
 
-const mesh = ExpoTHREE.loadAsync(
-	require("../../assets/models/jet.glb")
-).then(gltf => firstMesh(gltf.scene));
+const mesh = ExpoTHREE.loadAsync(JetFile).then(gltf => firstMesh(gltf.scene));
 
 export default async ({ parent, x = 0, y = 0, z = 0}) => {
 

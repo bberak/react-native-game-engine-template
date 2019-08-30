@@ -1,8 +1,7 @@
 import { THREE } from "expo-three";
 import { add } from "../utils/three";
-import { Audio } from "expo-av";
-import { throttle } from "../utils";
-import CrashWAV from "../../assets/audio/crash-01.wav";
+import { sound } from "../utils";
+import CrashFile from "../../assets/audio/crash-01.wav";
 
 export default ({
 	parent,
@@ -30,14 +29,7 @@ export default ({
 
 	add(parent, box);
 
-	const crash = Audio.Sound.createAsync(CrashWAV);
-
-	const playCrash = throttle(() => {
-		Promise.resolve(crash).then(({ sound, status }) => {
-			if (!status.isPlaying)
-				sound.playFromPositionAsync(0)
-		});
-	}, 16 * 40)
+	const crash = sound(CrashFile, 16 * 40);
 
 	return {
 		model: box,
@@ -57,7 +49,7 @@ export default ({
 		],
 		collision: (self, other, contact) => {
 			if (!contact.close)
-				playCrash();
+				crash();
 		},
 		removable: (frustum, self) => !frustum.intersectsObject(self.model)
 	};

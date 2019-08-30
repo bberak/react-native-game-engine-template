@@ -1,10 +1,9 @@
 import ExpoTHREE from "expo-three";
 import AnimatedModel from "./animated-model";
 import _ from "lodash"
+import DroidFile from "../../assets/models/droid.fbx"
 
-const mesh = ExpoTHREE.loadAsync(
-	require("../../assets/models/droid.fbx")
-);
+const mesh = ExpoTHREE.loadAsync(DroidFile);
 
 export default async ({ parent, x = 0, y = 0, z = 0}) => {
 

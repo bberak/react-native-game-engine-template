@@ -2,6 +2,7 @@ import _ from "lodash";
 import { interpolate } from '@popmotion/popcorn';
 import { Dimensions } from "react-native";
 import * as three from "./three";
+import { Audio } from "expo-av";
 
 const remove = (entities, key) => {
 	const entity = entities[key];
@@ -147,6 +148,19 @@ const throttle = (func, interval, defaultValue) => {
 
 const screen = Dimensions.get("window");
 
+const createSound = (asset, throttleInterval = 0) => {
+	const task = Audio.Sound.createAsync(asset);
+
+	const play = () => {
+		Promise.resolve(task).then(({ sound, status }) => {
+			if (!status.isPlaying)
+				sound.playFromPositionAsync(0)
+		});
+	};
+
+	return throttleInterval ? throttle(play, throttleInterval) : play;
+}
+
 module.exports = {
 	remove,
 	any,
@@ -172,5 +186,7 @@ module.exports = {
 	once: _.once,
 	memoize: _.memoize,
 	throttle,
-	screen
+	screen,
+	createSound,
+	sound: createSound
 }

@@ -1,9 +1,8 @@
 import ExpoTHREE, { THREE } from "expo-three";
 import Particles from "./particles";
+import ParticleFile from "../../assets/textures/particle.png";
 
-const particleTexture = ExpoTHREE.loadAsync(
-	require("../../assets/textures/particle.png")
-);
+const particleTexture = ExpoTHREE.loadAsync(ParticleFile);
 
 export default async ({
 	parent,
