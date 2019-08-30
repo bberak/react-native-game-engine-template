@@ -1,10 +1,9 @@
 import ExpoTHREE from "expo-three";
 import GPUParticleSystem from "../graphics/gpu-particle-system";
 import { add } from "../utils/three";
+import NoiseFile from "../../assets/textures/perlin.png";
 
-const _noiseTexture = ExpoTHREE.loadAsync(
-	require("../../assets/textures/perlin.png")
-);
+const _noiseTexture = ExpoTHREE.loadAsync(NoiseFile);
 
 export default async ({
 	maxParticles = 250,
