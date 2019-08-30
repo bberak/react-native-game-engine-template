@@ -1,7 +1,8 @@
 import { THREE } from 'expo-three';
 import CopyShader from "./shaders/copy-shader";
-import Pass from "./passes/pass";
 import ShaderPass from "./passes/shader-pass";
+import MaskPass from "./passes/mask-pass";
+import ClearMaskPass from "./passes/clear-mask-pass";
 
 /**
  * @author alteredq / http://alteredqualia.com/

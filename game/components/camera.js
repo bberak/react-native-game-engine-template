@@ -1,4 +1,4 @@
-import { THREE } from 'expo-three';
+import { THREE } from "expo-three";
 import { screen, remap } from "../utils";
 import { noise } from "../utils/perlin";
 

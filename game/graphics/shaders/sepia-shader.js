@@ -1,5 +1,3 @@
-import { THREE } from "expo-three";
-
 /**
  * @author alteredq / http://alteredqualia.com/
  *
@@ -9,7 +7,7 @@ import { THREE } from "expo-three";
  */
 
 export default (amount = 1.0) => {
-	const speiaShader = {
+	const sepiaShader = {
 		uniforms: {
 			tDiffuse: { value: null },
 			amount: { value: amount }
@@ -48,5 +46,5 @@ export default (amount = 1.0) => {
 		].join("\n")
 	};
 
-	return speiaShader;
+	return sepiaShader;
 };

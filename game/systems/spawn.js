@@ -1,6 +1,6 @@
 import Box from "../components/box"
 import Cylinder from "../components/cylinder"
-import { all, id } from "../utils";
+import { id } from "../utils";
 
 const boxId = (id => () => id("box"))(id(0));
 const cylinderId = (id => () => id("cylinder"))(id(0));

@@ -1,6 +1,5 @@
 import ExpoTHREE from "expo-three";
 import AnimatedModel from "./animated-model";
-import _ from "lodash"
 import DroidFile from "../../assets/models/droid.fbx"
 
 const mesh = ExpoTHREE.loadAsync(DroidFile);

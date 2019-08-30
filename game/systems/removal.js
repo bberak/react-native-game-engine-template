@@ -1,5 +1,5 @@
+import { THREE } from "expo-three";
 import { remove } from "../utils";
-import { THREE } from 'expo-three';
 import _ from "lodash";
 
 //-- https://gist.github.com/zentrope/5022d89cfa995ac71978

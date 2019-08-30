@@ -1,7 +1,7 @@
 import { THREE } from 'expo-three';
 import { add, rotateAroundPoint } from "../utils/three";
 
-export default Turntable = ({ parent, world, items = [], x = 0, y = 0, z = 0, radius = 4, height = 0.2, color = 0xdddddd, segments = 32, opacity = 1 }) => {
+export default ({ parent, world, items = [], x = 0, y = 0, z = 0, radius = 4, height = 0.2, color = 0xdddddd, segments = 32, opacity = 1 }) => {
 
 	const geometry = new THREE.CylinderGeometry(radius, radius + radius * 0.1, height, segments);
 	const material = new THREE.MeshStandardMaterial({ color, transparent: opacity < 1, opacity, flatShading: true });
@@ -59,7 +59,7 @@ export default Turntable = ({ parent, world, items = [], x = 0, y = 0, z = 0, ra
 
 					if (swipeController.oneFingerX)
 						self.bodies[0].angularVelocity.set(0, swipeController.oneFingerX * 0.1, 0)
-					else if (touches.find(x => x.type == "start"))
+					else if (touches.find(x => x.type === "start"))
 						self.bodies[0].angularVelocity.set(0, 0, 0)
 				}
 			}

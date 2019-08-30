@@ -56,7 +56,7 @@ const isTouchingPosition = (pos, proxmity) => {
     if (!touching) {
       const down = touches.find(
         t =>
-          (t.type == "start" || t.type == "move") &&
+          (t.type === "start" || t.type === "move") &&
           distance(t, pos) < proxmity
       );
 
@@ -66,11 +66,11 @@ const isTouchingPosition = (pos, proxmity) => {
       }
     } else {
       const up =
-        touches.find(t => t.type == "end" && t.event.identifier == id) ||
+        touches.find(t => t.type === "end" && t.event.identifier == id) ||
         touches.find(
           t =>
-            t.type == "move" &&
-            t.event.identifier == id &&
+            t.type === "move" &&
+            t.event.identifier === id &&
             distance(t, pos) > proxmity
         );
 
@@ -94,7 +94,7 @@ const trackNormalFromPosition = (pos, radius, proxmity) => {
     if (!normal) {
       const down = touches.find(
         t =>
-          (t.type == "start" || t.type == "move") &&
+          (t.type === "start" || t.type === "move") &&
           distance(t, pos) < proxmity
       );
 
@@ -108,8 +108,8 @@ const trackNormalFromPosition = (pos, radius, proxmity) => {
     } else {
       const move = touches.find(
         t =>
-          t.type == "move" &&
-          t.event.identifier == id &&
+          t.type === "move" &&
+          t.event.identifier === id &&
           distance(t, pos) < proxmity
       );
 
@@ -120,11 +120,11 @@ const trackNormalFromPosition = (pos, radius, proxmity) => {
         normal = normalize(clamped, radius);
       } else {
         const up =
-          touches.find(t => t.type == "end" && t.event.identifier == id) ||
+          touches.find(t => t.type === "end" && t.event.identifier === id) ||
           touches.find(
             t =>
-              t.type == "move" &&
-              t.event.identifier == id &&
+              t.type === "move" &&
+              t.event.identifier === id &&
               distance(t, pos) > proxmity
           );
 

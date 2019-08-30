@@ -2,9 +2,9 @@ import React, { PureComponent } from "react";
 import { Platform } from "react-native";
 import ExpoGraphics from "expo-graphics-rnge";
 import ExpoTHREE, { THREE } from "expo-three";
-import _ from "lodash";
 import EffectComposer  from "./effect-composer";
 import RenderPass from "./passes/render-pass";
+import _ from "lodash";
 
 global.THREE = THREE;
 

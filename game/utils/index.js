@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { interpolate } from '@popmotion/popcorn';
 import { Dimensions } from "react-native";
-import * as three from "./three";
+import * as ThreeUtils from "./three";
 import { Audio } from "expo-av";
 
 const remove = (entities, key) => {
@@ -11,16 +11,16 @@ const remove = (entities, key) => {
 		return;
 
 	if (entity.model)
-		three.remove(entity.model.parent, entity.model);
+		ThreeUtils.remove(entity.model.parent, entity.model);
 
 	if (entity.light)
-		three.remove(entity.light.parent, entity.light);
+		ThreeUtils.remove(entity.light.parent, entity.light);
 
 	if (entity.particles) {
 		Object.keys(entity.particles).forEach(k => {
 			const emitter = entity.particles[k].emitter
 			if (emitter)
-				three.remove(emitter.parent, emitter);
+				ThreeUtils.remove(emitter.parent, emitter);
 		})
 	}
 

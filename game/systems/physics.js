@@ -20,7 +20,7 @@ const Physics = entities => {
 
   	if (collision) {
   		for (let y = 0; y < entitiesWithBodies.length; y++) {
-  			if (x == y) 
+  			if (x === y) 
   				continue;
 
   			const otherEntity = entitiesWithBodies[y];

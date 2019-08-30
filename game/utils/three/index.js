@@ -1,4 +1,4 @@
-import { THREE } from 'expo-three';
+import { THREE } from "expo-three";
 import SkeletonUtils from "./skeleton-utils";
 
 export const clean = obj => {

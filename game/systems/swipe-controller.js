@@ -1,10 +1,9 @@
-import { screen } from "../utils/index";
 import _ from "lodash";
 
 const oneFingerNeutral = { oneFingerX: 0, oneFingerY: 0 };
 
 const getOneFingerMovement = moves => {
-  if (moves.length == 1) {
+  if (moves.length === 1) {
     const f1 = moves[0];
 
     const oneFingerX = f1.delta.locationX;
@@ -22,7 +21,7 @@ const getOneFingerMovement = moves => {
 const twoFingersNeutral = { twoFingersX: 0, twoFingersY: 0 };
 
 const getTwoFingerMovement = moves => {
-  if (moves.length == 2) {
+  if (moves.length === 2) {
     const f1 = moves[0];
     const f2 = moves[1];
 
@@ -39,7 +38,7 @@ const getTwoFingerMovement = moves => {
 };
 
 const getPinch = (moves, pinchThreshold) => {
-  if (moves.length == 2) {
+  if (moves.length === 2) {
 
     const f1 = moves[0];
     const f2 = moves[1];
@@ -64,7 +63,7 @@ let previous = {};
 
 const SwipeController = ({ pinchThreshold = 150 } = {}) => (Wrapped = x => x) => (entities, args) => {
   if (!args.swipeController) {
-    const moves = _.uniqBy(args.touches.filter(x => x.type == "move"), x => x.event.identifier);
+    const moves = _.uniqBy(args.touches.filter(x => x.type === "move"), x => x.event.identifier);
     const current = {
       ...getOneFingerMovement(moves),
       ...getTwoFingerMovement(moves),
