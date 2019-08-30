@@ -27,7 +27,7 @@ git commit -m "First commit"
 
 git remote add origin https://github.com/me/my-game.git
 
-git push origin master
+git push -u origin master
 
 ```
 
@@ -40,3 +40,16 @@ npm install -g expo-cli
 
 npm run start
 ```
+
+This template contains the following:
+
+- Stick (GamePad) controllers
+- A simple HUD
+- Particle systems
+- Sound support
+- Physics implementation powered by [Oimo](https://github.com/lo-th/Oimo.js/)
+- [ThreeJS](https://github.com/mrdoob/three.js) rendering
+- Post-processing effects
+- Sprite support with animations
+
+> All of the above systems and components are hackable and extensible - which *should* allow for quick[er] prototyping.

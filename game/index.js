@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { GameEngine } from "react-native-game-engine";
 import Renderer from "./graphics/renderer";
 import Systems from "./systems";
@@ -15,12 +15,11 @@ class Game extends React.Component {
       <GameEngine
         style={{ backgroundColor: "black" }}
         ref={"engine"}
-        onEvent={this.handleEvent}
         systems={Systems}
         entities={Entities()}
         renderer={Renderer(
-          //new ShaderPass(PixelShader()),
-          //new ShaderPass(ScanlineShader())
+          new ShaderPass(PixelShader()),
+          new ShaderPass(ScanlineShader())
         )}
       />
     );
