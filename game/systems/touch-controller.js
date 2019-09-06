@@ -61,8 +61,8 @@ const getPinch = (moves, pinchThreshold) => {
 
 let previous = {};
 
-const SwipeController = ({ pinchThreshold = 150 } = {}) => (Wrapped = x => x) => (entities, args) => {
-  if (!args.swipeController) {
+const TouchController = ({ pinchThreshold = 150 } = {}) => (Wrapped = x => x) => (entities, args) => {
+  if (!args.touchController) {
     const moves = _.uniqBy(args.touches.filter(x => x.type === "move"), x => x.event.identifier);
     const current = {
       ...getOneFingerMovement(moves),
@@ -70,7 +70,7 @@ const SwipeController = ({ pinchThreshold = 150 } = {}) => (Wrapped = x => x) =>
       pinch: getPinch(moves, pinchThreshold)
     };
 
-    args.swipeController = Object.assign(
+    args.touchController = Object.assign(
       {},
       current,
       { previous }
@@ -82,4 +82,4 @@ const SwipeController = ({ pinchThreshold = 150 } = {}) => (Wrapped = x => x) =>
   return Wrapped(entities, args);
 };
 
-export default SwipeController;
+export default TouchController;

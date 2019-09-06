@@ -53,12 +53,12 @@ export default ({ parent, world, items = [], x = 0, y = 0, z = 0, radius = 4, he
 		timelines: {
 			swipe: {
 				while: true,
-				update(self, entities, timeline, { swipeController, gamepadController, touches }) {
+				update(self, entities, timeline, { touchController, gamepadController, touches }) {
 					if (gamepadController.heading !== null || gamepadController.a || gamepadController.b)
 						return;
 
-					if (swipeController.oneFingerX)
-						self.bodies[0].angularVelocity.set(0, swipeController.oneFingerX * 0.1, 0)
+					if (touchController.oneFingerX)
+						self.bodies[0].angularVelocity.set(0, touchController.oneFingerX * 0.1, 0)
 					else if (touches.find(x => x.type === "start"))
 						self.bodies[0].angularVelocity.set(0, 0, 0)
 				}
