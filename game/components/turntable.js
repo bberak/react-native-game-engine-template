@@ -53,8 +53,8 @@ export default ({ parent, world, items = [], x = 0, y = 0, z = 0, radius = 4, he
 		timelines: {
 			swipe: {
 				while: true,
-				update(self, entities, timeline, { swipeController, stickController, touches }) {
-					if (stickController.heading !== null || stickController.a || stickController.b)
+				update(self, entities, timeline, { swipeController, gamepadController, touches }) {
+					if (gamepadController.heading !== null || gamepadController.a || gamepadController.b)
 						return;
 
 					if (swipeController.oneFingerX)

@@ -3,7 +3,7 @@ const HUD = (entities, args) => {
   const hud = entities.hud;
 
   if (hud) {
-    hud.stickController = args.stickController;
+    hud.gamepadController = args.gamepadController;
   }
 
   return entities;

@@ -145,15 +145,15 @@ const trackNormalFromStick = trackNormalFromPosition(stickPosition, stickRadius,
 
 let previous = {};
 
-const StickController = (Wrapped = x => x) => (entities, args) => {
-  if (!args.stickController) {
+const GamepadController = (Wrapped = x => x) => (entities, args) => {
+  if (!args.gamepadController) {
     const current = {
       ...trackNormalFromStick(args.touches),
       a: isTouchingA(args.touches),
       b: isTouchingB(args.touches)
     };
 
-    args.stickController = Object.assign(
+    args.gamepadController = Object.assign(
       { stickRadius, stickPosition, aRadius, aPosition, bRadius, bPosition },
       current,
       { previous }
@@ -165,4 +165,4 @@ const StickController = (Wrapped = x => x) => (entities, args) => {
   return Wrapped(entities, args);
 };
 
-export default StickController;
+export default GamepadController;

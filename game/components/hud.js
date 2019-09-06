@@ -3,8 +3,8 @@ import { StyleSheet, View } from "react-native";
 
 class HUDRenderer extends React.Component {
   shouldComponentUpdate(nextProps) {
-    const s1 = this.props.stickController || {};
-    const s2 = nextProps.stickController || {};
+    const s1 = this.props.gamepadController || {};
+    const s2 = nextProps.gamepadController || {};
 
     return Boolean(s1.x || s1.y) !== Boolean(s2.x || s2.y) || s1.a !== s2.a || s1.b !== s2.b;
   }
@@ -21,7 +21,7 @@ class HUDRenderer extends React.Component {
       b = false,
       x = 0,
       y = 0
-    } = this.props.stickController || {};
+    } = this.props.gamepadController || {};
 
     const usingStick = x || y;
 
