@@ -13,11 +13,11 @@ This project uses [Expo](https://expo.io) because quite frankly, it is the easie
 Firstly, clone the repo and configure git tracking:
 
 ```
-git clone https://github.com/bberak/react-native-game-engine-template.git
+git clone https://github.com/bberak/react-native-game-engine-template.git [new-game]
 
-mv react-native-game-engine-template my-game && cd my-game
+cd [new-game]
 
-rm -rf .git
+rm -rf .git # Windows: rmdir /S .git
 
 git init
 
@@ -25,7 +25,7 @@ git add .
 
 git commit -m "First commit"
 
-git remote add origin https://github.com/me/my-game.git
+git remote add origin https://github.com/[you]/[new-game].git
 
 git push -u origin master
 
