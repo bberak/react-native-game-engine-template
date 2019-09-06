@@ -1,43 +1,35 @@
 import _ from "lodash";
 
-const oneFingerNeutral = { oneFingerX: 0, oneFingerY: 0 };
+const neutral = { x: 0, y: 0 };
 
-const getOneFingerMovement = moves => {
+const singleFingerMovement = moves => {
   if (moves.length === 1) {
     const f1 = moves[0];
 
-    const oneFingerX = f1.delta.locationX;
-    const oneFingerY = f1.delta.locationY;
-
     return {
-      oneFingerX,
-      oneFingerY
+      x: f1.delta.locationX,
+      y: f1.delta.locationY
     };
   }
 
-  return oneFingerNeutral;
+  return neutral;
 };
 
-const twoFingersNeutral = { twoFingersX: 0, twoFingersY: 0 };
-
-const getTwoFingerMovement = moves => {
-  if (moves.length === 2) {
+const multiFingerMovement = moves => {
+  if (moves.length > 1) {
     const f1 = moves[0];
     const f2 = moves[1];
 
-    const twoFingersX = (f1.delta.locationX + f2.delta.locationX) / 2;
-    const twoFingersY = (f1.delta.locationY + f2.delta.locationY) / 2;
-
     return {
-      twoFingersX,
-      twoFingersY
+      x: (f1.delta.locationX + f2.delta.locationX) / 2,
+      y: (f1.delta.locationY + f2.delta.locationY) / 2
     };
   }
 
-  return twoFingersNeutral;
+  return neutral;
 };
 
-const getPinch = (moves, pinchThreshold) => {
+const pinch = (moves, pinchThreshold) => {
   if (moves.length === 2) {
 
     const f1 = moves[0];
@@ -59,15 +51,30 @@ const getPinch = (moves, pinchThreshold) => {
   return 0;
 };
 
+const find = type => touches => {
+  const found = touches.find(x => x.type === type)
+
+  if (found)
+    return found.event;
+}
+
+const press = find("press");
+
+const start = find("start")
+
 let previous = {};
 
 const TouchController = ({ pinchThreshold = 150 } = {}) => (Wrapped = x => x) => (entities, args) => {
   if (!args.touchController) {
-    const moves = _.uniqBy(args.touches.filter(x => x.type === "move"), x => x.event.identifier);
+    const touches = args.touches;
+    const moves = _.uniqBy(touches.filter(x => x.type === "move"), x => x.event.identifier);
+    
     const current = {
-      ...getOneFingerMovement(moves),
-      ...getTwoFingerMovement(moves),
-      pinch: getPinch(moves, pinchThreshold)
+      singleFingerMovement: singleFingerMovement(moves),
+      multiFingerMovement: multiFingerMovement(moves),
+      pinch: pinch(moves, pinchThreshold),
+      press: press(touches),
+      start: start(touches)
     };
 
     args.touchController = Object.assign(

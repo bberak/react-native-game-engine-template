@@ -29,7 +29,7 @@ export const direction = obj => {
 export const rotateAroundPoint = (
 	obj,
 	point,
-	{ thetaX = 0, thetaY = 0, thetaZ = 0 }
+	{ x = 0, y = 0, z = 0 }
 ) => {
 	//-- https://stackoverflow.com/a/42866733/138392
 	//-- https://stackoverflow.com/a/44288885/138392
@@ -40,13 +40,13 @@ export const rotateAroundPoint = (
 
 	obj.position.copy(pivot);
 
-	obj.rotation.x += thetaX;
-	obj.rotation.y += thetaY;
-	obj.rotation.z += thetaZ;
+	obj.rotation.x += x;
+	obj.rotation.y += y;
+	obj.rotation.z += z;
 
-	diff.applyAxisAngle(new THREE.Vector3(1, 0, 0), thetaX);
-	diff.applyAxisAngle(new THREE.Vector3(0, 1, 0), thetaY);
-	diff.applyAxisAngle(new THREE.Vector3(0, 0, 1), thetaZ);
+	diff.applyAxisAngle(new THREE.Vector3(1, 0, 0), x);
+	diff.applyAxisAngle(new THREE.Vector3(0, 1, 0), y);
+	diff.applyAxisAngle(new THREE.Vector3(0, 0, 1), z);
 
 	obj.position.add(diff);
 };

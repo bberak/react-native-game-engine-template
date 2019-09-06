@@ -10,10 +10,10 @@ const Camera = ({
 
     if (camera && touchController) {
       //-- Yaw and pitch rotation
-      if (touchController.twoFingersX || touchController.twoFingersY) {
+      if (touchController.multiFingerMovement.x || touchController.multiFingerMovement.y) {
         rotateAroundPoint(camera, camera.target, {
-          thetaY: touchController.twoFingersX * yawSpeed,
-          thetaX: touchController.twoFingersY * pitchSpeed
+          y: touchController.multiFingerMovement.x * yawSpeed,
+          x: touchController.multiFingerMovement.y * pitchSpeed
         });
         camera.lookAt(camera.target);
       }
