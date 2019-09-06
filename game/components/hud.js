@@ -3,10 +3,10 @@ import { StyleSheet, View } from "react-native";
 
 class HUDRenderer extends React.Component {
   shouldComponentUpdate(nextProps) {
-    const s1 = this.props.gamepadController || {};
-    const s2 = nextProps.gamepadController || {};
+    const g1 = this.props.gamepadController || {};
+    const g2 = nextProps.gamepadController || {};
 
-    return Boolean(s1.x || s1.y) !== Boolean(s2.x || s2.y) || s1.a !== s2.a || s1.b !== s2.b;
+    return Boolean(g1.x || g1.y) !== Boolean(g2.x || g2.y) || g1.a !== g2.a || g1.b !== g2.b;
   }
 
   render() {
