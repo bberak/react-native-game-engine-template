@@ -12,7 +12,7 @@ import Spawn from "./spawn";
 export default [
 	GamepadController(),
 	SwipeController()(),
-	Camera({ pitchSpeed: -0.01, yawSpeed: 0 }),
+	Camera({ pitchSpeed: -0.01, yawSpeed: 0.01 }),
 	Particles,
 	Removal,
 	Rotation,
