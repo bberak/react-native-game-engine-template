@@ -17,6 +17,7 @@ class ThreeView extends PureComponent {
   };
 
   onContextCreate = async ({ gl, canvas, width, height, scale: pixelRatio }) => {
+    this.props.camera.resize(width, height, pixelRatio);
     this.renderer = new ExpoTHREE.Renderer({
       gl,
       pixelRatio,
@@ -37,8 +38,7 @@ class ThreeView extends PureComponent {
   };
 
   onResize = ({ width, height, scale: pixelRatio }) => {
-    this.props.camera.aspect = width / height;
-    this.props.camera.updateProjectionMatrix();
+    this.props.camera.resize(width, height, pixelRatio);
     this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(pixelRatio);
   };

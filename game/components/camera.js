@@ -38,5 +38,10 @@ export default () => {
 		}
 	};
 
+	camera.resize = (width, height, dpr) => {
+		camera.aspect = width / height;
+		camera.updateProjectionMatrix();
+	};
+
 	return camera;
 };
