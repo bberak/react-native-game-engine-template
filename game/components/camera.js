@@ -30,8 +30,8 @@ export default () => {
 				update(self, entities, percent, { seed, startPos }) {
 					self.position.x =
 						startPos.x + remap(noise(seed + percent), 0, 1, -5, 5);
-					self.position.z =
-						startPos.z +
+					self.position.y =
+						startPos.y +
 						remap(noise(seed + 250 + percent), 0, 1, -5, 5);
 				}
 			};

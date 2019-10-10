@@ -1,6 +1,6 @@
 import { all } from "../utils";
 
-const Physics = entities => {
+const Physics = (entities, args) => {
   const world = entities.world;
   const entitiesWithBodies = all(entities, e => e.bodies && e.model);
 
@@ -28,7 +28,7 @@ const Physics = entities => {
   			const contact = world.getContact(body, otherBody);
 
   			if (contact)
-  				collision(entity, otherEntity, contact);
+  				collision(entity, otherEntity, contact, entities, args);
   		}
   	}
   }
