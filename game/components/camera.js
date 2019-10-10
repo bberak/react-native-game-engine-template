@@ -29,10 +29,10 @@ export default () => {
 				seed: Date.now(),
 				update(self, entities, percent, { seed, startPos }) {
 					self.position.x =
-						startPos.x + remap(noise(seed + percent), 0, 1, -5, 5);
+						startPos.x + remap(noise(seed + percent), 0, 1, -2.5, 2.5);
 					self.position.y =
 						startPos.y +
-						remap(noise(seed + 250 + percent), 0, 1, -5, 5);
+						remap(noise(seed + 250 + percent), 0, 1, -2.5, 2.5);
 				}
 			};
 		}
