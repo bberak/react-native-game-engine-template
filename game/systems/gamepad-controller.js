@@ -1,4 +1,5 @@
 import { screen } from "../utils/index";
+import { Vibration } from 'react-native';
 
 const padding = 10;
 
@@ -139,6 +140,10 @@ const trackNormalFromPosition = (pos, radius, proxmity) => {
   };
 };
 
+const vibrate = (patternOrDuration, repeat) => {
+    Vibration.vibrate(patternOrDuration, repeat);
+};
+
 const isTouchingA = isTouchingPosition(aPosition, aRadius + 20);
 const isTouchingB = isTouchingPosition(bPosition, bRadius + 20);
 const trackNormalFromStick = trackNormalFromPosition(stickPosition, stickRadius, stickRadius + 40)
@@ -150,7 +155,8 @@ const GamepadController = (Wrapped = x => x) => (entities, args) => {
     const current = {
       ...trackNormalFromStick(args.touches),
       a: isTouchingA(args.touches),
-      b: isTouchingB(args.touches)
+      b: isTouchingB(args.touches),
+      vibrate
     };
 
     args.gamepadController = Object.assign(
