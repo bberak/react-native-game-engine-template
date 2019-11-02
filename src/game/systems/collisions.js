@@ -99,7 +99,7 @@ const Collisions = config => (entities, args) => {
 
             //-- Does the current entity care about the one he has collied with?
 
-            if (entityCollisions.predicate(other)) {
+            if (entityCollisions.predicate(entity, other)) {
               const otherBounds = _.isFunction(otherCollisions.bounds)
                 ? otherCollisions.bounds()
                 : otherCollisions.bounds;
