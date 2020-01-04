@@ -60,26 +60,27 @@ class ThreeView extends PureComponent {
   }
 }
 
-const renderHUD = (state, screen) => {
-  if (!state.hud) return null;
+const renderHUD = (entities, screen) => {
+  if (!entities.hud) return null;
 
-  const hud = state.hud;
+  const hud = entities.hud;
 
   if (typeof hud.renderer === "object")
-    return <hud.renderer.type key={"hud"} {...hud} screen={screen} />;
+    return <hud.renderer.type key={"hud"} screen={screen} {...hud} />;
   else if (typeof hud.renderer === "function")
-    return <hud.renderer key={"hud"} {...hud} screen={screen} />;
+    return <hud.renderer key={"hud"} screen={screen} {...hud} />;
 };
 
-const ThreeJSRenderer = (...passes) => (state, screen) => {
+const ThreeJSRenderer = (...passes) => (entities, screen) => {
+  if (!entities) return null;
   return [
     <ThreeView
       passes={_.flatten(passes)}
       key={"three-view"}
-      scene={state.scene}
-      camera={state.camera}
+      scene={entities.scene}
+      camera={entities.camera}
     />,
-    renderHUD(state, screen)
+    renderHUD(entities, screen)
   ];
 };
 
