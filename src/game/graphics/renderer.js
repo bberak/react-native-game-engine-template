@@ -28,6 +28,9 @@ class ThreeView extends PureComponent {
     this.gl = gl;
     this.composer = new EffectComposer(this.renderer);
 
+    //-- Toggle line below if you have issues with shadows and/or post-processing effects
+    this.gl.createRenderbuffer = () => {};
+
     const passes = [
       new RenderPass(this.props.scene, this.props.camera),
       ...this.props.passes
